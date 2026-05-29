@@ -1,0 +1,197 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding-bottom: $spacing-xl;
+}
+
+.header {
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  padding: $spacing-lg $page-padding $spacing-xl;
+  border-radius: 0 0 $radius-xl $radius-xl;
+}
+
+.greeting {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-text-white;
+  margin-bottom: $spacing-xs;
+}
+
+.subtitle {
+  font-size: $font-size-sm;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.content {
+  padding: 0 $page-padding;
+  margin-top: -$spacing-lg;
+}
+
+.statsRow {
+  display: flex;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+}
+
+.section {
+  margin-bottom: $spacing-lg;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-md;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.sectionMore {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.quickActions {
+  display: flex;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+}
+
+.actionCard {
+  flex: 1;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.actionIcon {
+  width: 80rpx;
+  height: 80rpx;
+  background: $color-bg-tag;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: $spacing-sm;
+}
+
+.actionIconText {
+  font-size: 40rpx;
+}
+
+.actionLabel {
+  font-size: $font-size-sm;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+}
+
+.todayList {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-md;
+  box-shadow: $shadow-card;
+}
+
+.todayItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md;
+  border-radius: $radius-md;
+  transition: all $transition-base;
+
+  &:active {
+    background: $color-bg-hover;
+  }
+
+  & + & {
+    margin-top: $spacing-xs;
+  }
+}
+
+.todayAvatar {
+  width: 72rpx;
+  height: 72rpx;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  border-radius: $radius-round;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: $spacing-md;
+  flex-shrink: 0;
+}
+
+.todayAvatarText {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-white;
+}
+
+.todayInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.todayName {
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+}
+
+.todayDesc {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  @include text-ellipsis;
+}
+
+.todayTag {
+  padding: 4rpx $spacing-sm;
+  background: rgba(0, 180, 42, 0.1);
+  border-radius: $radius-xs;
+  flex-shrink: 0;
+}
+
+.todayTagText {
+  font-size: $font-size-xs;
+  color: $color-success;
+  font-weight: $font-weight-medium;
+}
+
+.fab {
+  position: fixed;
+  right: $page-padding;
+  bottom: 180rpx;
+  width: 104rpx;
+  height: 104rpx;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  border-radius: $radius-round;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: $shadow-float;
+  z-index: 100;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.fabText {
+  font-size: 48rpx;
+  color: $color-text-white;
+}

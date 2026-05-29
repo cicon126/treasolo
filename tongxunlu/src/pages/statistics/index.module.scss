@@ -1,0 +1,221 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding: 0 $page-padding $spacing-xl;
+}
+
+.statsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+  margin: $spacing-md 0 $spacing-lg;
+}
+
+.section {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-lg;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-lg;
+}
+
+.chartContainer {
+  margin-bottom: $spacing-lg;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.chartTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-md;
+}
+
+.barChart {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.barItem {
+  display: flex;
+  align-items: center;
+}
+
+.barLabel {
+  width: 140rpx;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  flex-shrink: 0;
+}
+
+.barTrack {
+  flex: 1;
+  height: 40rpx;
+  background: $color-bg-hover;
+  border-radius: $radius-md;
+  overflow: hidden;
+  margin: 0 $spacing-md;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: $radius-md;
+  transition: width $transition-slow ease-out;
+}
+
+.barValue {
+  width: 80rpx;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.pieChart {
+  display: flex;
+  align-items: center;
+  gap: $spacing-lg;
+}
+
+.pieVisual {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: $radius-round;
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pieCenter {
+  width: 100rpx;
+  height: 100rpx;
+  background: $color-bg-card;
+  border-radius: $radius-round;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pieCenterText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.pieLegend {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+}
+
+.legendDot {
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: $radius-round;
+  margin-right: $spacing-sm;
+  flex-shrink: 0;
+}
+
+.legendLabel {
+  flex: 1;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.legendValue {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.trendChart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 280rpx;
+  padding: $spacing-md 0;
+  border-bottom: 1rpx solid $color-divider;
+  margin-bottom: $spacing-md;
+}
+
+.trendBar {
+  flex: 1;
+  margin: 0 4rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.trendBarFill {
+  width: 100%;
+  max-width: 48rpx;
+  background: linear-gradient(180deg, $color-primary-light 0%, $color-primary 100%);
+  border-radius: $radius-sm $radius-sm 0 0;
+  transition: height $transition-slow ease-out;
+  position: relative;
+}
+
+.trendBarValue {
+  position: absolute;
+  top: -36rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: $font-size-xs;
+  color: $color-primary;
+  font-weight: $font-weight-medium;
+}
+
+.trendBarLabel {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-top: $spacing-sm;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  padding: $spacing-md 0;
+  border-top: 1rpx solid $color-divider;
+
+  &:first-of-type {
+    border-top: none;
+  }
+}
+
+.summaryLabel {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+}
+
+.summaryValue {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.emptyTip {
+  text-align: center;
+  padding: $spacing-xl;
+  color: $color-text-tertiary;
+  font-size: $font-size-sm;
+}

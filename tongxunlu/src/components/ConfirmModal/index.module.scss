@@ -1,0 +1,82 @@
+@use '@/styles/variables.scss' as *;
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  width: 600rpx;
+  background: $color-bg-card;
+  border-radius: $radius-xl;
+  padding: $spacing-xl;
+  box-shadow: $shadow-popup;
+}
+
+.title {
+  display: block;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  text-align: center;
+  margin-bottom: $spacing-md;
+}
+
+.content {
+  display: block;
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+  text-align: center;
+  line-height: $line-height-loose;
+  margin-bottom: $spacing-xl;
+}
+
+.actions {
+  display: flex;
+  gap: $spacing-md;
+}
+
+.btn {
+  @include button-reset;
+  flex: 1;
+  height: $button-height-md;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+}
+
+.cancelBtn {
+  background: $color-bg-hover;
+  color: $color-text-secondary;
+
+  &:active {
+    background: $color-border;
+  }
+}
+
+.confirmBtn {
+  &.confirmPrimary {
+    background: $color-primary;
+    color: $color-text-white;
+
+    &:active {
+      background: $color-primary-dark;
+    }
+  }
+
+  &.confirmError {
+    background: $color-error;
+    color: $color-text-white;
+
+    &:active {
+      opacity: 0.9;
+    }
+  }
+}
