@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-red: #d32f2f;
+  --primary-red-dark: #b71c1c;
+  --primary-red-light: #e53935;
+  --bg-dark: #1a0000;
+  --bg-darker: #0d0000;
+  --bg-card: #1c1010;
+  --text-primary: #f0d0d0;
+  --text-secondary: rgba(200, 150, 150, 0.6);
+  --border-color: rgba(200, 50, 50, 0.2);
+}
+
+body {
+  font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+  background: linear-gradient(135deg, var(--bg-dark) 0%, #2d0a0a 50%, var(--bg-dark) 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2vh 0;
+}
+
+#app {
+  width: 100%;
+  max-width: 520px;
+  height: 96vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input, button {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}

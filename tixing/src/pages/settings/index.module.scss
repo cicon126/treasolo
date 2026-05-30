@@ -1,0 +1,136 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #FFF0E0 0%, $color-bg-page 100%);
+  padding: $spacing-lg $page-padding;
+}
+
+.card {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(255, 125, 0, 0.1);
+  margin-bottom: $spacing-lg;
+}
+
+.sectionTitle {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  padding: $spacing-md $spacing-lg $spacing-sm;
+  text-transform: uppercase;
+  letter-spacing: 2rpx;
+}
+
+.settingItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-lg;
+  border-bottom: 1rpx solid $color-divider;
+  transition: all $transition-base;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:active {
+    background: $color-bg-hover;
+  }
+}
+
+.itemLeft {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.itemIcon {
+  font-size: 40rpx;
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-primary-bg;
+  border-radius: $radius-md;
+}
+
+.itemInfo {
+  flex: 1;
+}
+
+.itemTitle {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+}
+
+.itemDesc {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  margin-top: 4rpx;
+}
+
+.switch {
+  transform: scale(0.8);
+}
+
+.itemArrow {
+  font-size: 32rpx;
+  color: $color-text-tertiary;
+}
+
+.aboutCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-xl;
+  box-shadow: 0 2rpx 12rpx rgba(255, 125, 0, 0.1);
+  text-align: center;
+}
+
+.logo {
+  font-size: 80rpx;
+  margin-bottom: $spacing-md;
+}
+
+.appName {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+}
+
+.appVersion {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  margin-top: $spacing-xs;
+}
+
+.appDesc {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-top: $spacing-lg;
+  line-height: $line-height-loose;
+}
+
+.features {
+  display: flex;
+  justify-content: center;
+  gap: $spacing-lg;
+  margin-top: $spacing-xl;
+  flex-wrap: wrap;
+}
+
+.feature {
+  text-align: center;
+}
+
+.featureIcon {
+  font-size: 48rpx;
+  margin-bottom: $spacing-xs;
+}
+
+.featureText {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}

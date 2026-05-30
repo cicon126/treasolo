@@ -1,0 +1,114 @@
+@use '@/styles/variables.scss' as *;
+
+.card {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+  box-shadow: 0 2rpx 12rpx rgba(255, 125, 0, 0.1);
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.completed {
+  opacity: 0.6;
+  background: $color-bg-hover;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-md;
+}
+
+.checkbox {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: $radius-round;
+  border: 3rpx solid $color-border;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 4rpx;
+  transition: all $transition-base;
+}
+
+.checked {
+  background: $color-primary;
+  border-color: $color-primary;
+
+  .checkIcon {
+    display: block;
+  }
+}
+
+.checkIcon {
+  display: none;
+  color: $color-text-white;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.contentWrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.content {
+  font-size: $font-size-lg;
+  color: $color-text-primary;
+  line-height: $line-height-normal;
+  word-break: break-all;
+}
+
+.completedContent {
+  text-decoration: line-through;
+  color: $color-text-tertiary;
+}
+
+.timeWrap {
+  display: flex;
+  align-items: center;
+  margin-top: $spacing-sm;
+  gap: $spacing-xs;
+}
+
+.timeIcon {
+  font-size: 24rpx;
+}
+
+.time {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.urgent {
+  color: $color-error;
+  font-weight: $font-weight-medium;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: $spacing-md;
+  padding-top: $spacing-md;
+  border-top: 1rpx solid $color-divider;
+}
+
+.deleteBtn {
+  @include button-reset;
+  padding: $spacing-sm $spacing-md;
+  background: $color-primary-bg;
+  border-radius: $radius-sm;
+  color: $color-primary;
+  font-size: $font-size-sm;
+  transition: all $transition-base;
+
+  &:active {
+    background: rgba(255, 125, 0, 0.15);
+  }
+}

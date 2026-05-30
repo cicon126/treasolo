@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>太空星球动态运行模拟</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <canvas id="starsCanvas"></canvas>
+    
+    <div class="solar-system" id="solarSystem">
+        <div class="sun" id="sun">
+            <div class="sun-glow"></div>
+            <div class="sun-core"></div>
+        </div>
+        
+        <div class="orbits" id="orbits"></div>
+        
+        <div class="planets" id="planets"></div>
+    </div>
+    
+    <div class="control-panel">
+        <div class="panel-title">太阳系控制台</div>
+        <div class="control-group">
+            <button class="control-btn" id="playPauseBtn">
+                <span class="btn-icon" id="playIcon">⏸</span>
+                <span class="btn-text" id="playText">暂停</span>
+            </button>
+        </div>
+        <div class="control-group">
+            <label class="control-label">运行速度</label>
+            <input type="range" class="speed-slider" id="speedSlider" min="0.5" max="3" step="0.1" value="1">
+            <span class="speed-value" id="speedValue">1.0x</span>
+        </div>
+        <div class="control-group">
+            <label class="toggle-label">
+                <input type="checkbox" id="orbitToggle" checked>
+                <span class="toggle-slider"></span>
+                显示轨道
+            </label>
+        </div>
+    </div>
+    
+    <div class="title-header">
+        <h1 class="main-title">太阳系行星运行模拟</h1>
+        <p class="subtitle">点击任意星球查看详细信息</p>
+    </div>
+    
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content" id="modalContent">
+            <button class="modal-close" id="modalClose">×</button>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
