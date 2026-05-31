@@ -1,0 +1,148 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  min-height: 100vh;
+  background: $color-bg-page;
+}
+
+.profileCard {
+  background: linear-gradient(135deg, $color-gradient-start, $color-gradient-end);
+  padding: $spacing-xl $spacing-lg;
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: $radius-round;
+  background: rgba(255, 255, 255, 0.2);
+  @include flex-center;
+  font-size: 56rpx;
+  flex-shrink: 0;
+}
+
+.profileInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.profileName {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-white;
+  display: block;
+  margin-bottom: $spacing-xs;
+}
+
+.profileDesc {
+  font-size: $font-size-sm;
+  color: rgba(255, 255, 255, 0.8);
+  display: block;
+}
+
+.statsCard {
+  display: flex;
+  align-items: center;
+  background: $color-bg-card;
+  margin: -40rpx $spacing-lg 0;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  position: relative;
+  z-index: 1;
+}
+
+.statItem {
+  flex: 1;
+  @include flex-center;
+  flex-direction: column;
+}
+
+.statValue {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-primary;
+  display: block;
+}
+
+.statLabel {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-top: $spacing-xs;
+  display: block;
+}
+
+.statDivider {
+  width: 1rpx;
+  height: 60rpx;
+  background: $color-divider;
+}
+
+.menuSection {
+  margin: $spacing-lg $spacing-lg 0;
+}
+
+.menuTitle {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  margin-bottom: $spacing-sm;
+  padding-left: $spacing-sm;
+}
+
+.menuCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  overflow: hidden;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md $spacing-lg;
+  transition: background $transition-base;
+
+  &:active {
+    background: $color-bg-hover;
+  }
+
+  &:not(:last-child) {
+    border-bottom: 1rpx solid $color-divider;
+  }
+}
+
+.menuLeft {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.menuIcon {
+  font-size: $font-size-lg;
+}
+
+.menuLabel {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+}
+
+.menuArrow {
+  font-size: $font-size-sm;
+  color: $color-text-disabled;
+}
+
+.versionText {
+  display: block;
+  text-align: center;
+  font-size: $font-size-xs;
+  color: $color-text-disabled;
+  margin-top: $spacing-xl * 2;
+  padding-bottom: 120rpx;
+}
+
+.bottomSpace {
+  height: 120rpx;
+}

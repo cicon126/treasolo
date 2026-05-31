@@ -1,0 +1,215 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #4A6CF7 0%, #6B8AFF 30%, $color-bg-page 35%);
+}
+
+.headerSection {
+  padding: $spacing-xl $spacing-lg $spacing-xl;
+}
+
+.headerTitle {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-text-white;
+  display: block;
+  margin-bottom: $spacing-xs;
+}
+
+.headerDesc {
+  font-size: $font-size-sm;
+  color: rgba(255, 255, 255, 0.8);
+  display: block;
+}
+
+.searchSection {
+  margin: 0 $spacing-lg;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  overflow: hidden;
+}
+
+.langHint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  padding: 0 $spacing-lg $spacing-md;
+}
+
+.langHintText {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.langDot {
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: $radius-round;
+  background: $color-primary;
+}
+
+.resultsSection {
+  padding: $spacing-md $spacing-lg;
+}
+
+.resultsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+}
+
+.resultsTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.resultsCount {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.emptyState {
+  @include flex-center;
+  flex-direction: column;
+  padding: $spacing-xl * 2 0;
+}
+
+.emptyIcon {
+  font-size: 80rpx;
+  margin-bottom: $spacing-md;
+}
+
+.emptyText {
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+  margin-bottom: $spacing-xs;
+}
+
+.emptyHint {
+  font-size: $font-size-sm;
+  color: $color-text-disabled;
+}
+
+.dailySection {
+  margin: $spacing-md $spacing-lg;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.dailyHeader {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+}
+
+.dailyLabel {
+  background: linear-gradient(135deg, $color-gradient-start, $color-gradient-end);
+  padding: 4rpx 20rpx;
+  border-radius: $radius-button;
+}
+
+.dailyLabelText {
+  font-size: $font-size-xs;
+  color: $color-text-white;
+  font-weight: $font-weight-medium;
+}
+
+.dailyDate {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.dailyWord {
+  display: flex;
+  align-items: baseline;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-xs;
+}
+
+.dailyEnglish {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-primary;
+}
+
+.dailyPhonetic {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.dailyChinese {
+  font-size: $font-size-lg;
+  color: $color-text-secondary;
+  display: block;
+  margin-bottom: $spacing-md;
+}
+
+.dailyExample {
+  background: $color-example-bg;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+}
+
+.dailyExampleEn {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  line-height: $line-height-loose;
+  display: block;
+  margin-bottom: $spacing-xs;
+}
+
+.dailyExampleZh {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  display: block;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  display: block;
+  margin-bottom: $spacing-md;
+  padding: 0 $spacing-lg;
+  margin-top: $spacing-md;
+}
+
+.hotWordsSection {
+  padding: $spacing-md $spacing-lg;
+}
+
+.hotWordsWrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+}
+
+.hotWordTag {
+  background: $color-bg-card;
+  border: 1rpx solid $color-border;
+  border-radius: $radius-button;
+  padding: 10rpx 28rpx;
+  transition: all $transition-base;
+
+  &:active {
+    background: $color-tag-bg;
+    border-color: $color-primary;
+  }
+}
+
+.hotWordText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.bottomSpace {
+  height: 120rpx;
+}

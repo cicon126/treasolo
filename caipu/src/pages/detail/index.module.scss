@@ -1,0 +1,228 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  min-height: 100vh;
+  padding-bottom: 120rpx;
+}
+
+.heroImage {
+  width: 100%;
+  height: 450rpx;
+  position: relative;
+  background-color: $color-bg-page;
+}
+
+.recipeImage {
+  width: 100%;
+  height: 100%;
+}
+
+.imageOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 150rpx;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+}
+
+.headerInfo {
+  position: absolute;
+  bottom: $spacing-md;
+  left: $spacing-md;
+  right: $spacing-md;
+}
+
+.recipeName {
+  font-size: $font-size-xl;
+  font-weight: 600;
+  color: $color-text-white;
+  margin-bottom: $spacing-sm;
+  text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.3);
+}
+
+.categoryTag {
+  display: inline-block;
+  padding: 4rpx 16rpx;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: $radius-sm;
+}
+
+.tagText {
+  font-size: $font-size-sm;
+  color: $color-primary;
+  font-weight: 500;
+}
+
+.content {
+  padding: $spacing-md;
+  margin-top: -$spacing-lg;
+  position: relative;
+}
+
+.section {
+  background-color: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-card;
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  font-size: $font-size-lg;
+  font-weight: 600;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+}
+
+.sectionIcon {
+  font-size: $font-size-xl;
+  margin-right: $spacing-sm;
+}
+
+.ingredientList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.ingredientItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-sm 0;
+  border-bottom: 1rpx solid $color-divider;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.ingredientDot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  background-color: $color-primary;
+  margin-right: $spacing-md;
+  flex-shrink: 0;
+}
+
+.ingredientText {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+  flex: 1;
+}
+
+.stepList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+}
+
+.stepItem {
+  display: flex;
+  gap: $spacing-md;
+}
+
+.stepNumber {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stepNumberText {
+  font-size: $font-size-sm;
+  font-weight: 600;
+  color: $color-text-white;
+}
+
+.stepContent {
+  flex: 1;
+  padding-top: $spacing-xs;
+}
+
+.stepText {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+  line-height: $line-height-relaxed;
+}
+
+.remarkBox {
+  background-color: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+}
+
+.remarkText {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+  line-height: $line-height-relaxed;
+}
+
+.emptyRemark {
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+  font-style: italic;
+}
+
+.actionBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: $spacing-md;
+  background-color: $color-bg-card;
+  display: flex;
+  gap: $spacing-md;
+  box-shadow: 0 -2rpx 12rpx rgba(0, 0, 0, 0.08);
+  z-index: 100;
+}
+
+.editBtn {
+  @include button-reset;
+  flex: 1;
+  height: 88rpx;
+  background-color: $color-bg-hover;
+  border-radius: $radius-button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+.editText {
+  font-size: $font-size-md;
+  font-weight: 500;
+  color: $color-text-primary;
+}
+
+.deleteBtn {
+  @include button-reset;
+  flex: 1;
+  height: 88rpx;
+  background: linear-gradient(135deg, $color-error 0%, #ff6b6b 100%);
+  border-radius: $radius-button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+}
+
+.deleteText {
+  font-size: $font-size-md;
+  font-weight: 500;
+  color: $color-text-white;
+}

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小黄鸭闹钟</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">🦆 小黄鸭闹钟</h1>
+        
+        <div class="duck-clock">
+            <div class="hat" id="duckHat">
+                <div class="hat-bell left" id="bellLeft">
+                    <div class="bell"></div>
+                    <div class="bell-clapper"></div>
+                </div>
+                <div class="hat-bell right" id="bellRight">
+                    <div class="bell"></div>
+                    <div class="bell-clapper"></div>
+                </div>
+                <div class="hat-top"></div>
+                <div class="hat-brim"></div>
+            </div>
+            
+            <div class="duck-head">
+                <div class="duck-eye left">
+                    <div class="eye-pupil"></div>
+                </div>
+                <div class="duck-eye right">
+                    <div class="eye-pupil"></div>
+                </div>
+                <div class="duck-beak">
+                    <div class="beak-top"></div>
+                    <div class="beak-bottom"></div>
+                </div>
+                <div class="duck-cheek left"></div>
+                <div class="duck-cheek right"></div>
+            </div>
+            
+            <div class="duck-body">
+                <div class="alarm-clock-face" id="alarmClockFace">
+                    <div class="clock-number num12">12</div>
+                    <div class="clock-number num1">1</div>
+                    <div class="clock-number num2">2</div>
+                    <div class="clock-number num3">3</div>
+                    <div class="clock-number num4">4</div>
+                    <div class="clock-number num5">5</div>
+                    <div class="clock-number num6">6</div>
+                    <div class="clock-number num7">7</div>
+                    <div class="clock-number num8">8</div>
+                    <div class="clock-number num9">9</div>
+                    <div class="clock-number num10">10</div>
+                    <div class="clock-number num11">11</div>
+                    <div class="clock-hand hour-hand" id="hourHand"></div>
+                    <div class="clock-hand minute-hand" id="minuteHand"></div>
+                    <div class="clock-hand second-hand" id="secondHand"></div>
+                    <div class="clock-center"></div>
+                </div>
+                <div class="duck-wing left"></div>
+                <div class="duck-wing right"></div>
+            </div>
+            
+            <div class="duck-feet">
+                <div class="foot left"></div>
+                <div class="foot right"></div>
+            </div>
+        </div>
+        
+        <div class="digital-display">
+            <div class="digital-time" id="digitalTime">00:00:00</div>
+            <div class="digital-date" id="digitalDate">2024年1月1日 星期一</div>
+        </div>
+        
+        <div class="main-buttons">
+            <button class="btn stop-btn" id="stopBtn" disabled>🔇 停止铃声</button>
+            <button class="btn test-btn" id="testBtn">🔊 测试铃声</button>
+            <button class="btn settings-btn" id="settingsBtn">⚙️ 设置</button>
+        </div>
+        
+        <div class="settings-modal" id="settingsModal">
+            <div class="modal-content">
+                <h2>⚙️ 闹钟设置</h2>
+                <div class="control-panel">
+                    <div class="alarm-section">
+                        <h3>⏰ 闹钟设置</h3>
+                        <div class="alarm-input">
+                            <input type="time" id="alarmTime" value="08:00">
+                            <label class="switch">
+                                <input type="checkbox" id="alarmToggle">
+                                <span class="slider"></span>
+                            </label>
+                            <span class="alarm-status" id="alarmStatus">已关闭</span>
+                        </div>
+                    </div>
+                    
+                    <div class="hourly-section">
+                        <h3>🔔 整点报时</h3>
+                        <label class="switch">
+                            <input type="checkbox" id="hourlyToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                        <span class="hourly-status" id="hourlyStatus">已开启</span>
+                    </div>
+                </div>
+                <button class="btn test-btn" id="closeSettingsBtn">✓ 完成</button>
+            </div>
+        </div>
+        
+        <div class="alarm-modal" id="alarmModal">
+            <div class="modal-content">
+                <h2>⏰ 时间到啦！</h2>
+                <p id="modalMessage">该起床啦！</p>
+                <button class="btn stop-btn" id="modalStopBtn">知道了</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

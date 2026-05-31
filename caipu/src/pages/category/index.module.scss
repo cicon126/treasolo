@@ -1,0 +1,144 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  min-height: 100vh;
+  padding: $spacing-md;
+}
+
+.categorySection {
+  margin-bottom: $spacing-xl;
+}
+
+.categoryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+}
+
+.categoryTitle {
+  display: flex;
+  align-items: center;
+}
+
+.categoryIcon {
+  font-size: $font-size-xl;
+  margin-right: $spacing-sm;
+}
+
+.categoryName {
+  font-size: $font-size-lg;
+  font-weight: 600;
+  color: $color-text-primary;
+}
+
+.categoryCount {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  background-color: $color-bg-hover;
+  padding: 4rpx 16rpx;
+  border-radius: $radius-button;
+}
+
+.recipeScroll {
+  margin-left: -$spacing-md;
+  margin-right: -$spacing-md;
+  padding-left: $spacing-md;
+}
+
+.recipeRow {
+  display: flex;
+  gap: $spacing-md;
+  padding-right: $spacing-md;
+}
+
+.recipeCard {
+  width: 280rpx;
+  flex-shrink: 0;
+  background-color: $color-bg-card;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-card;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+}
+
+.cardImageWrap {
+  width: 100%;
+  height: 200rpx;
+  overflow: hidden;
+  background-color: $color-bg-page;
+
+  &:active {
+    opacity: 0.9;
+  }
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  background-color: $color-bg-page;
+}
+
+.cardContent {
+  padding: $spacing-sm;
+}
+
+.cardName {
+  font-size: $font-size-md;
+  font-weight: 500;
+  color: $color-text-primary;
+  @include text-ellipsis;
+  margin-bottom: 4rpx;
+}
+
+.cardInfo {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.emptyCategory {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx;
+  background-color: $color-bg-card;
+  border-radius: $radius-lg;
+}
+
+.emptyText {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.addBtn {
+  @include button-reset;
+  position: fixed;
+  bottom: 40rpx;
+  right: $spacing-md;
+  height: 96rpx;
+  padding: 0 $spacing-lg;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  border-radius: $radius-button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: $shadow-float;
+  z-index: 100;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+}
+
+.addBtnText {
+  font-size: $font-size-md;
+  font-weight: 600;
+  color: $color-text-white;
+}

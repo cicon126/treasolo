@@ -1,0 +1,126 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  min-height: 100vh;
+  padding: $spacing-md $spacing-md 120rpx;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  background-color: $color-bg-card;
+  border-radius: $radius-button;
+  padding: $spacing-sm $spacing-md;
+  margin-bottom: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.searchIcon {
+  font-size: $font-size-lg;
+  color: $color-text-tertiary;
+  margin-right: $spacing-sm;
+}
+
+.searchInput {
+  flex: 1;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+}
+
+.categoryScroll {
+  margin-bottom: $spacing-lg;
+}
+
+.categoryList {
+  display: flex;
+  gap: $spacing-sm;
+  padding-bottom: $spacing-sm;
+}
+
+.categoryItem {
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-button;
+  background-color: $color-bg-card;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+.categoryItemActive {
+  background-color: $color-primary;
+}
+
+.categoryText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.categoryTextActive {
+  color: $color-text-white;
+}
+
+.recipeList {
+  display: flex;
+  flex-direction: column;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx $spacing-md;
+}
+
+.emptyIcon {
+  font-size: 120rpx;
+  margin-bottom: $spacing-md;
+}
+
+.emptyText {
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80rpx;
+}
+
+.loadingText {
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+}
+
+.addBtn {
+  @include button-reset;
+  position: fixed;
+  bottom: 40rpx;
+  right: $spacing-md;
+  height: 96rpx;
+  padding: 0 $spacing-lg;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  border-radius: $radius-button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: $shadow-float;
+  z-index: 100;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+}
+
+.addBtnText {
+  font-size: $font-size-md;
+  font-weight: 600;
+  color: $color-text-white;
+}

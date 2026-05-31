@@ -1,0 +1,222 @@
+@use '@/styles/variables.scss' as *;
+
+.wordCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-card;
+}
+
+.wordHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-sm;
+}
+
+.wordMain {
+  display: flex;
+  align-items: baseline;
+  gap: $spacing-sm;
+  flex: 1;
+  min-width: 0;
+}
+
+.english {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  @include text-ellipsis;
+}
+
+.phonetic {
+  font-size: $font-size-sm;
+  color: $color-phonetic;
+  white-space: nowrap;
+}
+
+.favoriteBtn {
+  width: 64rpx;
+  height: 64rpx;
+  @include flex-center;
+  border-radius: $radius-round;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+.favoriteActive {
+  .favoriteIcon {
+    color: $color-star;
+  }
+}
+
+.favoriteIcon {
+  font-size: 44rpx;
+  color: $color-text-disabled;
+}
+
+.chineseRow {
+  display: flex;
+  align-items: baseline;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+  padding-bottom: $spacing-md;
+  border-bottom: 1rpx solid $color-divider;
+}
+
+.chinese {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $color-primary;
+}
+
+.pinyin {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.posSection {
+  margin-bottom: $spacing-md;
+}
+
+.posHeader {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-sm;
+}
+
+.posTag {
+  background: $color-tag-bg;
+  padding: 4rpx 16rpx;
+  border-radius: $radius-xs;
+}
+
+.posTagText {
+  font-size: $font-size-xs;
+  color: $color-tag-text;
+  font-weight: $font-weight-medium;
+}
+
+.posType {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.meaningItem {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-sm;
+  padding-left: $spacing-sm;
+}
+
+.meaningIndex {
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+  line-height: $line-height-loose;
+  flex-shrink: 0;
+}
+
+.meaningContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.meaningChinese {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  line-height: $line-height-loose;
+  display: block;
+}
+
+.meaningEnglish {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  line-height: $line-height-normal;
+  display: block;
+  margin-top: 2rpx;
+}
+
+.examplesSection {
+  margin-top: $spacing-md;
+  padding-top: $spacing-md;
+  border-top: 1rpx solid $color-divider;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  display: block;
+  margin-bottom: $spacing-md;
+}
+
+.exampleItem {
+  background: $color-example-bg;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  margin-bottom: $spacing-sm;
+}
+
+.exampleEn {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  line-height: $line-height-loose;
+  display: block;
+  margin-bottom: $spacing-xs;
+}
+
+.exampleZh {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: $line-height-normal;
+  display: block;
+}
+
+.relationsSection {
+  margin-top: $spacing-md;
+  padding-top: $spacing-md;
+  border-top: 1rpx solid $color-divider;
+}
+
+.relationGroup {
+  margin-bottom: $spacing-md;
+}
+
+.relationLabel {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  font-weight: $font-weight-medium;
+  display: block;
+  margin-bottom: $spacing-sm;
+}
+
+.relationTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+}
+
+.relationTag {
+  background: $color-tag-bg;
+  padding: 6rpx 20rpx;
+  border-radius: $radius-button;
+}
+
+.relationTagText {
+  font-size: $font-size-sm;
+  color: $color-tag-text;
+}
+
+.antonymTag {
+  background: #FFF3E8;
+}
+
+.antonymTagText {
+  color: $color-warning;
+}

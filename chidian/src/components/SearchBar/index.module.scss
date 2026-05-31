@@ -1,0 +1,75 @@
+@use '@/styles/variables.scss' as *;
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md $spacing-lg;
+  gap: $spacing-sm;
+}
+
+.searchInputWrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: $button-height-md;
+  background: $color-bg-card;
+  border-radius: $radius-button;
+  padding: 0 $spacing-lg;
+  border: 2rpx solid $color-border;
+  transition: all $transition-base;
+
+  &:focus-within {
+    border-color: $color-primary;
+    box-shadow: 0 0 0 4rpx rgba(74, 108, 247, 0.1);
+  }
+}
+
+.searchIcon {
+  font-size: $font-size-md;
+  margin-right: $spacing-sm;
+}
+
+.searchInput {
+  flex: 1;
+  height: $button-height-md;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+}
+
+.placeholder {
+  color: $color-text-disabled;
+  font-size: $font-size-md;
+}
+
+.clearBtn {
+  width: 40rpx;
+  height: 40rpx;
+  @include flex-center;
+  margin-left: $spacing-xs;
+}
+
+.clearIcon {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.searchBtn {
+  @include button-reset;
+  height: $button-height-md;
+  min-width: 120rpx;
+  padding: 0 $spacing-lg;
+  background: linear-gradient(135deg, $color-gradient-start, $color-gradient-end);
+  border-radius: $radius-button;
+  border: none;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+}
+
+.searchBtnText {
+  font-size: $font-size-md;
+  color: $color-text-white;
+  font-weight: $font-weight-medium;
+}
