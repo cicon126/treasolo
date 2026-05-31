@@ -1,0 +1,91 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding: $spacing-lg;
+  box-sizing: border-box;
+  padding-bottom: 150rpx;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-lg;
+}
+
+.title {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.addButton {
+  @include button-reset;
+  height: $button-height-md;
+  padding: 0 $spacing-lg;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  color: #fff;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+}
+
+.emptyState {
+  text-align: center;
+  padding: 100rpx 0;
+}
+
+.emptyIcon {
+  font-size: 120rpx;
+  margin-bottom: $spacing-lg;
+}
+
+.emptyText {
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+  margin-bottom: $spacing-xl;
+}
+
+.emptyButton {
+  display: inline-flex;
+}
+
+.list {
+  padding-bottom: $spacing-xl;
+}
+
+.totalProbability {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: $spacing-lg;
+  background: $color-bg-card;
+  box-shadow: 0 -4rpx 16rpx rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+}
+
+.totalLabel {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+}
+
+.totalValue {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-primary;
+}
+
+.totalWarning {
+  color: $color-warning;
+}

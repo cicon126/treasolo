@@ -21,3 +21,9 @@
   "msg": "Cloud Server started successfully.",
   "hash": "pai-preview-trae-d5cdf0a2"
 }
+[20:19:26.156] [PAI SDK] Received event: log {"content":"✅  编译成功 5/31/2026, 8:19:27 PM\n\n","timestamp":1780229967075}
+[20:20:09.253] [Preview Server] Frontend disconnected, clients size = 1
+[20:28:17.239] [PAI SDK] Received event: log {"content":"✅  编译成功 5/31/2026, 8:28:18 PM\n\n","timestamp":1780230498159}
+[21:20:20.809] Heartbeat timeout.
+[21:20:20.810] Shutting down...
+[21:20:20.811] Stopping Cloud Dev...
