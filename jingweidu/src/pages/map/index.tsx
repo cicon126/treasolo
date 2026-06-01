@@ -1,46 +1,68 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, Map, Button } from '@tarojs/components';
-import Taro from '@tarojs/taro';
+import React, { useState, useRef } from 'react';
+import { View, Text, Map, WebView, Button } from '@tarojs/components';
+import Taro, { useDidShow } from '@tarojs/taro';
 import styles from './index.module.scss';
 import { LocationData } from '../../types/location';
 import { getCurrentLocation, getHistory } from '../../store/locationStore';
 import { formatLatLng } from '../../utils/geocode';
+
+const IS_H5 = process.env.TARO_ENV === 'h5';
 
 const MapPage: React.FC = () => {
   const [location, setLocation] = useState<LocationData | null>(null);
   const [markers, setMarkers] = useState<any[]>([]);
   const mapRef = useRef<any>(null);
 
-  useEffect(() => {
+  const defaultLatitude = 39.9042;
+  const defaultLongitude = 116.4074;
+
+  useDidShow(() => {
+    console.log('[MapPage] useDidShow 触发，重新加载位置数据');
     loadLocation();
-  }, []);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const currentLoc = getCurrentLocation();
-      if (currentLoc && (!location || currentLoc.id !== location.id)) {
-        setLocation(currentLoc);
-        updateMarkers(currentLoc);
-      }
-    }, 500);
-
-    return () => clearInterval(timer);
-  }, [location]);
+  });
 
   const loadLocation = () => {
-    const currentLoc = getCurrentLocation();
-    if (currentLoc) {
-      setLocation(currentLoc);
-      updateMarkers(currentLoc);
-      console.log('[MapPage] 加载当前位置', currentLoc);
-    } else {
-      const history = getHistory();
-      if (history.length > 0) {
-        const latest = history[0];
-        setLocation(latest);
-        updateMarkers(latest);
-        console.log('[MapPage] 加载历史位置', latest);
+    console.log('[MapPage] 开始加载位置数据');
+
+    try {
+      const currentLoc = getCurrentLocation();
+      if (currentLoc) {
+        setLocation(currentLoc);
+        updateMarkers(currentLoc);
+        console.log('[MapPage] 加载当前位置', currentLoc);
+      } else {
+        const history = getHistory();
+        if (history.length > 0) {
+          const latest = history[0];
+          setLocation(latest);
+          updateMarkers(latest);
+          console.log('[MapPage] 加载历史位置', latest);
+        } else {
+          console.log('[MapPage] 无位置数据，使用默认位置');
+          const defaultLocation: LocationData = {
+            id: 'default',
+            latitude: defaultLatitude,
+            longitude: defaultLongitude,
+            address: '北京市天安门广场',
+            timestamp: Date.now(),
+            type: 'address-to-latlng'
+          };
+          setLocation(defaultLocation);
+          updateMarkers(defaultLocation);
+        }
       }
+    } catch (error) {
+      console.error('[MapPage] 加载位置数据失败', error);
+      const defaultLocation: LocationData = {
+        id: 'default',
+        latitude: defaultLatitude,
+        longitude: defaultLongitude,
+        address: '北京市天安门广场',
+        timestamp: Date.now(),
+        type: 'address-to-latlng'
+      };
+      setLocation(defaultLocation);
+      updateMarkers(defaultLocation);
     }
   };
 
@@ -51,8 +73,8 @@ const MapPage: React.FC = () => {
         latitude: loc.latitude,
         longitude: loc.longitude,
         title: loc.address,
-        width: 30,
-        height: 30,
+        width: 40,
+        height: 40,
         callout: {
           content: loc.address,
           color: '#1d2129',
@@ -66,6 +88,7 @@ const MapPage: React.FC = () => {
       }
     ];
     setMarkers(newMarkers);
+    console.log('[MapPage] 更新标记点', newMarkers);
   };
 
   const handleGoToConvert = () => {
@@ -89,33 +112,46 @@ const MapPage: React.FC = () => {
     return type === 'latlng-to-address' ? '经纬度转地址' : '地址转经纬度';
   };
 
-  const defaultLatitude = location?.latitude || 39.9042;
-  const defaultLongitude = location?.longitude || 116.4074;
+  const displayLatitude = location?.latitude ?? defaultLatitude;
+  const displayLongitude = location?.longitude ?? defaultLongitude;
+
+  const renderMap = () => {
+    if (IS_H5) {
+      const mapUrl = `https://apis.map.qq.com/tools/locpicker?search=1&type=1&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&referer=myapp&lng=${displayLongitude}&lat=${displayLatitude}`;
+      return (
+        <WebView src={mapUrl} className={styles.map} />
+      );
+    }
+
+    return (
+      <Map
+        ref={mapRef}
+        className={styles.map}
+        latitude={displayLatitude}
+        longitude={displayLongitude}
+        scale={15}
+        markers={markers}
+        showLocation={false}
+        enableZoom={true}
+        enableScroll={true}
+        enableRotate={false}
+        showCompass={true}
+      />
+    );
+  };
 
   return (
     <View className={styles.page}>
-      {location ? (
-        <View className={styles.mapContainer}>
-          <Map
-            ref={mapRef}
-            className={styles.map}
-            latitude={defaultLatitude}
-            longitude={defaultLongitude}
-            scale={16}
-            markers={markers}
-            showLocation={false}
-            enableZoom={true}
-            enableScroll={true}
-            enableRotate={false}
-            showCompass={false}
-          />
+      <View className={styles.mapContainer}>
+        {renderMap()}
 
-          <View className={styles.mapControls}>
-            <View className={styles.controlBtn} onClick={handleLocate}>
-              📍
-            </View>
+        <View className={styles.mapControls}>
+          <View className={styles.controlBtn} onClick={handleLocate}>
+            📍
           </View>
+        </View>
 
+        {location && (
           <View className={styles.infoCard}>
             <View className={styles.infoHeader}>
               <View className={styles.infoTitle}>
@@ -144,19 +180,8 @@ const MapPage: React.FC = () => {
               去转换坐标
             </Button>
           </View>
-        </View>
-      ) : (
-        <View className={styles.emptyState}>
-          <View className={styles.emptyIcon}>🗺️</View>
-          <View className={styles.emptyText}>
-            暂无位置数据
-            <Text>\n请先在坐标转换页面进行转换</Text>
-          </View>
-          <Button className={styles.emptyBtn} onClick={handleGoToConvert}>
-            去转换坐标
-          </Button>
-        </View>
-      )}
+        )}
+      </View>
     </View>
   );
 };

@@ -13,12 +13,12 @@ const IndexPage: React.FC = () => {
   const [mode, setMode] = useState<ConvertMode>('latlng-to-address');
   const [latitude, setLatitude] = useState<string>('');
   const [longitude, setLongitude] = useState<string>('');
-  const [address, setAddress] = useState<string>('');
+  const [addressInput, setAddressInput] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [result, setResult] = useState<ConvertResult | null>(null);
 
   const handleConvert = async () => {
-    console.log('[IndexPage] 开始转换', { mode, latitude, longitude, address });
+    console.log('[IndexPage] 开始转换', { mode, latitude, longitude, addressInput });
     setLoading(true);
     setResult(null);
 
@@ -38,7 +38,7 @@ const IndexPage: React.FC = () => {
           convertResult = await latLngToAddress(lat, lng);
         }
       } else {
-        convertResult = await addressToLatLng(address);
+        convertResult = await addressToLatLng(addressInput);
       }
 
       setResult(convertResult);
@@ -61,18 +61,55 @@ const IndexPage: React.FC = () => {
 
   const handleViewMap = () => {
     if (result?.success && result?.data) {
+      console.log('[IndexPage] 保存位置并跳转到地图页', result.data);
       setCurrentLocation(result.data);
-      Taro.switchTab({
-        url: '/pages/map/index'
+      Taro.showToast({
+        title: '正在打开地图...',
+        icon: 'loading',
+        duration: 500
       });
+      setTimeout(() => {
+        Taro.switchTab({
+          url: '/pages/map/index',
+          success: () => {
+            console.log('[IndexPage] 跳转到地图页成功');
+          },
+          fail: (err) => {
+            console.error('[IndexPage] 跳转到地图页失败', err);
+            Taro.showToast({
+              title: '打开地图失败',
+              icon: 'none',
+              duration: 2000
+            });
+          }
+        });
+      }, 300);
     }
   };
 
   const handleReset = () => {
     setLatitude('');
     setLongitude('');
-    setAddress('');
+    setAddressInput('');
     setResult(null);
+  };
+
+  const handleLatitudeInput = (e: any) => {
+    const value = e?.detail?.value ?? '';
+    console.log('[IndexPage] 纬度输入', value);
+    setLatitude(value);
+  };
+
+  const handleLongitudeInput = (e: any) => {
+    const value = e?.detail?.value ?? '';
+    console.log('[IndexPage] 经度输入', value);
+    setLongitude(value);
+  };
+
+  const handleAddressInput = (e: any) => {
+    const value = e?.detail?.value ?? '';
+    console.log('[IndexPage] 地址输入', value);
+    setAddressInput(value);
   };
 
   const handleModeChange = (newMode: ConvertMode) => {
@@ -104,20 +141,20 @@ const IndexPage: React.FC = () => {
               <View className={styles.label}>纬度 (-90 ~ 90)</View>
               <Input
                 className={styles.input}
-                type='digit'
+                type='text'
                 placeholder='请输入纬度，如：39.9042'
                 value={latitude}
-                onInput={(e) => setLatitude(e.detail.value)}
+                onInput={handleLatitudeInput}
               />
             </View>
             <View className={styles.inputGroup}>
               <View className={styles.label}>经度 (-180 ~ 180)</View>
               <Input
                 className={styles.input}
-                type='digit'
+                type='text'
                 placeholder='请输入经度，如：116.4074'
                 value={longitude}
-                onInput={(e) => setLongitude(e.detail.value)}
+                onInput={handleLongitudeInput}
               />
             </View>
           </>
@@ -126,9 +163,10 @@ const IndexPage: React.FC = () => {
             <View className={styles.label}>详细地址</View>
             <Input
               className={styles.input}
+              type='text'
               placeholder='请输入详细地址，如：北京市朝阳区国贸大厦'
-              value={address}
-              onInput={(e) => setAddress(e.detail.value)}
+              value={addressInput}
+              onInput={handleAddressInput}
             />
           </View>
         )}

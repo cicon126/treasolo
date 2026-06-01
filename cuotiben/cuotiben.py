@@ -1,10 +1,24 @@
 import tkinter as tk
-from tkinter import ttk, messagebox, simpledialog
+from tkinter import ttk, messagebox, simpledialog, filedialog
 import sqlite3
 import datetime
 import os
+import uuid
+import shutil
 
 DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cuotiben.db")
+IMG_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "images")
+
+try:
+    from PIL import Image, ImageTk
+    HAS_PIL = True
+except ImportError:
+    HAS_PIL = False
+
+
+def ensure_img_dir():
+    if not os.path.exists(IMG_DIR):
+        os.makedirs(IMG_DIR)
 
 COLORS = {
     "primary": "#1E88E5",
@@ -62,6 +76,18 @@ class Database:
                 FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
             )
         """)
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS images (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                question_id INTEGER NOT NULL,
+                field_type TEXT NOT NULL,
+                file_path TEXT NOT NULL,
+                original_name TEXT DEFAULT '',
+                sort_order INTEGER DEFAULT 0,
+                created_at TEXT DEFAULT (datetime('now','localtime')),
+                FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE
+            )
+        """)
         default_cats = [
             ("数学", "#1E88E5"),
             ("语文", "#43A047"),
@@ -76,6 +102,7 @@ class Database:
             except sqlite3.IntegrityError:
                 pass
         self.conn.commit()
+        ensure_img_dir()
 
     def get_categories(self):
         cur = self.conn.cursor()
@@ -188,6 +215,61 @@ class Database:
             "hard": hard,
         }
 
+    def add_image(self, question_id, field_type, file_path, original_name="", sort_order=0):
+        ensure_img_dir()
+        ext = os.path.splitext(file_path)[1].lower()
+        new_filename = f"{question_id}_{field_type}_{uuid.uuid4().hex[:8]}{ext}"
+        dest_path = os.path.join(IMG_DIR, new_filename)
+        shutil.copy2(file_path, dest_path)
+        cur = self.conn.cursor()
+        cur.execute("""
+            INSERT INTO images (question_id, field_type, file_path, original_name, sort_order)
+            VALUES (?, ?, ?, ?, ?)
+        """, (question_id, field_type, dest_path, original_name, sort_order))
+        self.conn.commit()
+        return cur.lastrowid
+
+    def get_images(self, question_id, field_type=None):
+        cur = self.conn.cursor()
+        sql = "SELECT * FROM images WHERE question_id = ?"
+        params = [question_id]
+        if field_type:
+            sql += " AND field_type = ?"
+            params.append(field_type)
+        sql += " ORDER BY sort_order, id"
+        cur.execute(sql, params)
+        return [dict(row) for row in cur.fetchall()]
+
+    def delete_image(self, image_id):
+        cur = self.conn.cursor()
+        cur.execute("SELECT file_path FROM images WHERE id = ?", (image_id,))
+        row = cur.fetchone()
+        if row and os.path.exists(row["file_path"]):
+            try:
+                os.remove(row["file_path"])
+            except:
+                pass
+        cur.execute("DELETE FROM images WHERE id = ?", (image_id,))
+        self.conn.commit()
+
+    def delete_images_by_question(self, question_id):
+        images = self.get_images(question_id)
+        for img in images:
+            if os.path.exists(img["file_path"]):
+                try:
+                    os.remove(img["file_path"])
+                except:
+                    pass
+        cur = self.conn.cursor()
+        cur.execute("DELETE FROM images WHERE question_id = ?", (question_id,))
+        self.conn.commit()
+
+    def delete_question(self, qid):
+        self.delete_images_by_question(qid)
+        cur = self.conn.cursor()
+        cur.execute("DELETE FROM questions WHERE id = ?", (qid,))
+        self.conn.commit()
+
     def close(self):
         self.conn.close()
 
@@ -204,9 +286,134 @@ class App(tk.Tk):
         self.current_page = "add"
         self.current_category_id = None
         self.current_question_id = None
+        self._img_refs = {}
+        self._add_temp_images = {}
 
         self._build_ui()
         self.show_page("add")
+
+    def _choose_image_file(self):
+        return filedialog.askopenfilename(
+            title="选择图片",
+            filetypes=[("图片文件", "*.png *.jpg *.jpeg *.bmp *.gif"), ("所有文件", "*.*")]
+        )
+
+    def _load_image(self, file_path, max_size=150):
+        if not os.path.exists(file_path):
+            return None
+        try:
+            if HAS_PIL:
+                img = Image.open(file_path)
+                w, h = img.size
+                ratio = min(max_size / w, max_size / h, 1.0)
+                new_w, new_h = int(w * ratio), int(h * ratio)
+                img = img.resize((new_w, new_h), Image.LANCZOS)
+                photo = ImageTk.PhotoImage(img)
+            else:
+                photo = tk.PhotoImage(file=file_path)
+                w = photo.width()
+                h = photo.height()
+                if w > max_size or h > max_size:
+                    ratio = min(max_size / w, max_size / h)
+                    photo = photo.subsample(int(1 / ratio), int(1 / ratio))
+            return photo
+        except Exception as e:
+            print(f"加载图片失败: {e}")
+            return None
+
+    def _add_temp_image(self, field_type, file_path):
+        if field_type not in self._add_temp_images:
+            self._add_temp_images[field_type] = []
+        self._add_temp_images[field_type].append({
+            "file_path": file_path,
+            "original_name": os.path.basename(file_path)
+        })
+
+    def _remove_temp_image(self, field_type, index):
+        if field_type in self._add_temp_images and 0 <= index < len(self._add_temp_images[field_type]):
+            del self._add_temp_images[field_type][index]
+
+    def _clear_temp_images(self):
+        self._add_temp_images = {}
+
+    def _save_temp_images(self, question_id):
+        for field_type, images in self._add_temp_images.items():
+            for idx, img in enumerate(images):
+                self.db.add_image(
+                    question_id, field_type, img["file_path"],
+                    img["original_name"], idx
+                )
+
+    def _render_thumbnails(self, parent, images, field_type, on_remove=None, show_remove=True):
+        for w in parent.winfo_children():
+            w.destroy()
+        if not images:
+            if show_remove:
+                tk.Label(parent, text="（暂无图片）", font=FONT_SMALL, bg=COLORS["bg_light"],
+                         fg=COLORS["text_secondary"]).pack(side=tk.LEFT, padx=5)
+            return
+        for idx, img_data in enumerate(images):
+            img_path = img_data["file_path"] if isinstance(img_data, dict) else img_data
+            photo = self._load_image(img_path, max_size=120)
+            if photo is None:
+                tk.Label(parent, text="无法加载", font=FONT_SMALL, bg=COLORS["bg_light"],
+                         fg=COLORS["danger"]).pack(side=tk.LEFT, padx=3)
+                continue
+            ref_key = f"{field_type}_{idx}_{id(parent)}"
+            self._img_refs[ref_key] = photo
+
+            cell = tk.Frame(parent, bg=COLORS["bg_light"], padx=3, pady=3)
+            cell.pack(side=tk.LEFT, padx=3)
+
+            lbl = tk.Label(cell, image=photo, bg=COLORS["bg_light"], cursor="hand2")
+            lbl.pack()
+            lbl.bind("<Button-1>", lambda e, p=img_path: self._show_full_image(p))
+
+            if show_remove and on_remove:
+                btn = tk.Button(cell, text="✕", font=FONT_SMALL, bg=COLORS["danger"],
+                                fg=COLORS["text_white"], bd=0, cursor="hand2",
+                                width=2, command=lambda i=idx: on_remove(i))
+                btn.pack(pady=(2, 0))
+
+    def _show_full_image(self, file_path):
+        if not os.path.exists(file_path):
+            messagebox.showwarning("提示", "图片文件不存在")
+            return
+        win = tk.Toplevel(self)
+        win.title("查看大图")
+        win.configure(bg=COLORS["bg_white"])
+        win.transient(self)
+
+        try:
+            if HAS_PIL:
+                img = Image.open(file_path)
+                w, h = img.size
+                max_w, max_h = 800, 600
+                if w > max_w or h > max_h:
+                    ratio = min(max_w / w, max_h / h)
+                    img = img.resize((int(w * ratio), int(h * ratio)), Image.LANCZOS)
+                photo = ImageTk.PhotoImage(img)
+            else:
+                photo = tk.PhotoImage(file=file_path)
+                w, h = photo.width(), photo.height()
+                max_w, max_h = 800, 600
+                if w > max_w or h > max_h:
+                    ratio = min(max_w / w, max_h / h)
+                    photo = photo.subsample(int(1 / ratio), int(1 / ratio))
+
+            win.geometry(f"{photo.width() + 40}x{photo.height() + 60}")
+
+            lbl = tk.Label(win, image=photo, bg=COLORS["bg_white"])
+            lbl.pack(expand=True, padx=20, pady=20)
+
+            tk.Button(win, text="关闭", command=win.destroy, font=FONT_BODY,
+                      bg=COLORS["primary"], fg=COLORS["text_white"], bd=0, padx=20, pady=6,
+                      cursor="hand2").pack(pady=(0, 15))
+
+            lbl._photo = photo
+        except Exception as e:
+            tk.Label(win, text=f"无法加载图片: {e}", font=FONT_BODY,
+                     bg=COLORS["bg_white"], fg=COLORS["danger"]).pack(padx=20, pady=30)
 
     def _build_ui(self):
         self.main_frame = tk.Frame(self, bg=COLORS["bg_white"])
@@ -360,6 +567,54 @@ class App(tk.Tk):
         sep.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(10, 0), pady=2)
         return frame
 
+    def _build_img_upload_row(self, parent, field_type):
+        container = tk.Frame(parent, bg=COLORS["bg_white"])
+        container.pack(fill=tk.X, padx=30, pady=(0, 8))
+
+        btn_f = tk.Frame(container, bg=COLORS["bg_white"])
+        btn_f.pack(fill=tk.X)
+
+        def _upload():
+            fpath = self._choose_image_file()
+            if fpath:
+                self._add_temp_image(field_type, fpath)
+                self._refresh_thumbnails(field_type)
+
+        def _remove(idx):
+            self._remove_temp_image(field_type, idx)
+            self._refresh_thumbnails(field_type)
+
+        def _refresh():
+            self._render_thumbnails(
+                thumb_f, self._add_temp_images.get(field_type, []),
+                field_type, on_remove=_remove
+            )
+
+        setattr(self, f"_refresh_thumbnails_{field_type}", _refresh)
+
+        upload_btn = tk.Button(btn_f, text="📷 上传图片", font=FONT_SMALL,
+                               bg=COLORS["bg_light"], fg=COLORS["primary"],
+                               bd=0, cursor="hand2", padx=12, pady=4,
+                               activebackground=COLORS["bg_hover"],
+                               activeforeground=COLORS["primary_dark"],
+                               command=_upload)
+        upload_btn.pack(side=tk.LEFT)
+
+        tk.Label(btn_f, text="（点击缩略图可查看大图，点击✕可删除）", font=FONT_SMALL,
+                 bg=COLORS["bg_white"], fg=COLORS["text_secondary"]).pack(side=tk.LEFT, padx=8)
+
+        thumb_f = tk.Frame(container, bg=COLORS["bg_light"], padx=8, pady=8, height=140)
+        thumb_f.pack(fill=tk.X, pady=(5, 0))
+        thumb_f.pack_propagate(False)
+
+        self._render_thumbnails(thumb_f, [], field_type, on_remove=_remove)
+        return container
+
+    def _refresh_thumbnails(self, field_type):
+        refresh_fn = getattr(self, f"_refresh_thumbnails_{field_type}", None)
+        if refresh_fn:
+            refresh_fn()
+
     def _build_add_page(self):
         for w in self.pages["add"].winfo_children():
             w.destroy()
@@ -420,18 +675,22 @@ class App(tk.Tk):
         self._section_header(scroll_frame, "题目内容")
         self.add_content_text = self._make_entry(scroll_frame, "请输入完整的题目内容...", height=6)
         self.add_content_text.pack(fill=tk.X, padx=30, pady=5)
+        self.add_content_img_frame = self._build_img_upload_row(scroll_frame, "content")
 
         self._section_header(scroll_frame, "我的答案")
         self.add_my_answer_text = self._make_entry(scroll_frame, "记录你当时的解答过程...", height=4)
         self.add_my_answer_text.pack(fill=tk.X, padx=30, pady=5)
+        self.add_my_answer_img_frame = self._build_img_upload_row(scroll_frame, "my_answer")
 
         self._section_header(scroll_frame, "正确答案")
         self.add_correct_answer_text = self._make_entry(scroll_frame, "记录正确的解答过程...", height=4)
         self.add_correct_answer_text.pack(fill=tk.X, padx=30, pady=5)
+        self.add_correct_answer_img_frame = self._build_img_upload_row(scroll_frame, "correct_answer")
 
         self._section_header(scroll_frame, "原题解析")
         self.add_analysis_text = self._make_entry(scroll_frame, "对题目进行解析，总结解题思路和方法...", height=4)
         self.add_analysis_text.pack(fill=tk.X, padx=30, pady=5)
+        self.add_analysis_img_frame = self._build_img_upload_row(scroll_frame, "analysis")
 
         self._section_header(scroll_frame, "心得笔记")
         self.add_notes_text = self._make_entry(scroll_frame, "写下你的感悟、易错点和注意事项...", height=4)
@@ -480,7 +739,8 @@ class App(tk.Tk):
             messagebox.showwarning("提示", "未找到所选分类")
             return
 
-        self.db.add_question(cat_id, title, content, my_answer, correct_answer, analysis, notes, difficulty)
+        qid = self.db.add_question(cat_id, title, content, my_answer, correct_answer, analysis, notes, difficulty)
+        self._save_temp_images(qid)
         messagebox.showinfo("成功", "错题已保存！")
         self._clear_add_form()
 
@@ -492,6 +752,9 @@ class App(tk.Tk):
         self.add_analysis_text.delete("1.0", tk.END)
         self.add_notes_text.delete("1.0", tk.END)
         self.add_diff_var.set(2)
+        self._clear_temp_images()
+        for ft in ["content", "my_answer", "correct_answer", "analysis"]:
+            self._refresh_thumbnails(ft)
 
     def _build_list_page(self):
         for w in self.pages["list"].winfo_children():
@@ -591,6 +854,13 @@ class App(tk.Tk):
             tk.Label(top, text=q["created_at"][:10], font=FONT_SMALL,
                      bg=COLORS["bg_white"], fg=COLORS["text_secondary"]).pack(side=tk.RIGHT)
 
+            all_imgs = self.db.get_images(q["id"])
+            if all_imgs:
+                img_count = tk.Label(top, text=f"📷 {len(all_imgs)}", font=FONT_SMALL,
+                                     bg=COLORS["primary_light"], fg=COLORS["text_white"],
+                                     padx=6, pady=1)
+                img_count.pack(side=tk.RIGHT, padx=5)
+
             mid = tk.Frame(card, bg=COLORS["bg_white"])
             mid.pack(fill=tk.X, padx=15, pady=3)
             tk.Label(mid, text=q["title"], font=FONT_HEADING, bg=COLORS["bg_white"],
@@ -641,13 +911,13 @@ class App(tk.Tk):
                  font=FONT_SMALL, bg=COLORS["bg_light"], fg=diff_color).pack(side=tk.RIGHT)
 
         sections = [
-            ("📝 题目内容", q["content"]),
-            ("❌ 我的答案", q["my_answer"]),
-            ("✅ 正确答案", q["correct_answer"]),
-            ("🔍 原题解析", q["analysis"]),
-            ("💡 心得笔记", q["notes"]),
+            ("📝 题目内容", q["content"], "content"),
+            ("❌ 我的答案", q["my_answer"], "my_answer"),
+            ("✅ 正确答案", q["correct_answer"], "correct_answer"),
+            ("🔍 原题解析", q["analysis"], "analysis"),
+            ("💡 心得笔记", q["notes"], None),
         ]
-        for label, content in sections:
+        for label, content, field_type in sections:
             self._section_header(detail_frame, label)
             text_frame = tk.Frame(detail_frame, bg=COLORS["bg_light"], padx=15, pady=10)
             text_frame.pack(fill=tk.X, padx=30, pady=3)
@@ -655,6 +925,19 @@ class App(tk.Tk):
             fg = COLORS["text_dark"] if content and content.strip() else COLORS["text_secondary"]
             tk.Label(text_frame, text=display_text, font=FONT_BODY, bg=COLORS["bg_light"],
                      fg=fg, wraplength=600, justify=tk.LEFT, anchor="w").pack(fill=tk.X)
+
+            if field_type:
+                images = self.db.get_images(q["id"], field_type)
+                if images:
+                    img_frame = tk.Frame(detail_frame, bg=COLORS["bg_light"], padx=10, pady=8)
+                    img_frame.pack(fill=tk.X, padx=30, pady=(0, 3))
+                    tk.Label(img_frame, text="📷 相关图片（点击查看大图）:",
+                             font=FONT_SMALL, bg=COLORS["bg_light"],
+                             fg=COLORS["primary"]).pack(anchor="w")
+                    thumb_container = tk.Frame(img_frame, bg=COLORS["bg_light"])
+                    thumb_container.pack(fill=tk.X, pady=(5, 0))
+                    self._render_thumbnails(thumb_container, images,
+                        f"detail_{field_type}_{q['id']}", show_remove=False)
 
         time_f = tk.Frame(detail_frame, bg=COLORS["bg_white"])
         time_f.pack(fill=tk.X, padx=30, pady=10)
@@ -713,15 +996,108 @@ class App(tk.Tk):
 
         row += 1
 
+        edit_temp_images = {}
+        edit_existing_images = {}
+        edit_deleted_image_ids = []
+        thumb_refs = {}
+
+        def _build_edit_img_row(parent, field_type, existing_imgs):
+            container = tk.Frame(parent, bg=COLORS["bg_white"])
+            container.pack(fill=tk.X, padx=30, pady=(0, 8))
+
+            btn_f = tk.Frame(container, bg=COLORS["bg_white"])
+            btn_f.pack(fill=tk.X)
+
+            def _upload():
+                fpath = self._choose_image_file()
+                if fpath:
+                    if field_type not in edit_temp_images:
+                        edit_temp_images[field_type] = []
+                    edit_temp_images[field_type].append({
+                        "file_path": fpath,
+                        "original_name": os.path.basename(fpath)
+                    })
+                    _refresh()
+
+            def _remove_existing(idx):
+                img_id = existing_imgs[idx]["id"]
+                edit_deleted_image_ids.append(img_id)
+                del existing_imgs[idx]
+                _refresh()
+
+            def _remove_new(idx):
+                del edit_temp_images[field_type][idx]
+                _refresh()
+
+            def _refresh():
+                all_imgs = []
+                for img in existing_imgs:
+                    all_imgs.append({**img, "_is_existing": True})
+                for i, img in enumerate(edit_temp_images.get(field_type, [])):
+                    all_imgs.append({**img, "_is_existing": False, "_idx": i})
+
+                for w in thumb_f.winfo_children():
+                    w.destroy()
+                if not all_imgs:
+                    tk.Label(thumb_f, text="（暂无图片）", font=FONT_SMALL, bg=COLORS["bg_light"],
+                             fg=COLORS["text_secondary"]).pack(side=tk.LEFT, padx=5)
+                    return
+
+                for idx, img_data in enumerate(all_imgs):
+                    img_path = img_data["file_path"]
+                    photo = self._load_image(img_path, max_size=120)
+                    if photo is None:
+                        tk.Label(thumb_f, text="无法加载", font=FONT_SMALL, bg=COLORS["bg_light"],
+                                 fg=COLORS["danger"]).pack(side=tk.LEFT, padx=3)
+                        continue
+                    ref_key = f"edit_{field_type}_{idx}"
+                    thumb_refs[ref_key] = photo
+
+                    cell = tk.Frame(thumb_f, bg=COLORS["bg_light"], padx=3, pady=3)
+                    cell.pack(side=tk.LEFT, padx=3)
+
+                    lbl = tk.Label(cell, image=photo, bg=COLORS["bg_light"], cursor="hand2")
+                    lbl.pack()
+                    lbl.bind("<Button-1>", lambda e, p=img_path: self._show_full_image(p))
+
+                    if img_data["_is_existing"]:
+                        del_cmd = lambda i=idx: _remove_existing(i)
+                    else:
+                        del_cmd = lambda i=img_data["_idx"]: _remove_new(i)
+
+                    btn = tk.Button(cell, text="✕", font=FONT_SMALL, bg=COLORS["danger"],
+                                    fg=COLORS["text_white"], bd=0, cursor="hand2",
+                                    width=2, command=del_cmd)
+                    btn.pack(pady=(2, 0))
+
+            upload_btn = tk.Button(btn_f, text="� 上传图片", font=FONT_SMALL,
+                                   bg=COLORS["bg_light"], fg=COLORS["primary"],
+                                   bd=0, cursor="hand2", padx=12, pady=4,
+                                   activebackground=COLORS["bg_hover"],
+                                   activeforeground=COLORS["primary_dark"],
+                                   command=_upload)
+            upload_btn.pack(side=tk.LEFT)
+
+            tk.Label(btn_f, text="（点击缩略图可查看大图，点击✕可删除）", font=FONT_SMALL,
+                     bg=COLORS["bg_white"], fg=COLORS["text_secondary"]).pack(side=tk.LEFT, padx=8)
+
+            thumb_f = tk.Frame(container, bg=COLORS["bg_light"], padx=8, pady=8, height=140)
+            thumb_f.pack(fill=tk.X, pady=(5, 0))
+            thumb_f.pack_propagate(False)
+
+            _refresh()
+            return _refresh
+
         fields = [
-            ("📝 题目内容", q["content"], 5),
-            ("❌ 我的答案", q["my_answer"], 3),
-            ("✅ 正确答案", q["correct_answer"], 3),
-            ("🔍 原题解析", q["analysis"], 3),
-            ("💡 心得笔记", q["notes"], 3),
+            ("�� 题目内容", q["content"], 5, "content"),
+            ("❌ 我的答案", q["my_answer"], 3, "my_answer"),
+            ("✅ 正确答案", q["correct_answer"], 3, "correct_answer"),
+            ("🔍 原题解析", q["analysis"], 3, "analysis"),
+            ("💡 心得笔记", q["notes"], 3, None),
         ]
         text_widgets = []
-        for label, content, h in fields:
+        img_refresh_fns = {}
+        for label, content, h, field_type in fields:
             self._section_header(edit_frame, label)
             t = tk.Text(edit_frame, font=FONT_BODY, height=h, wrap=tk.WORD,
                         bg=COLORS["bg_white"], fg=COLORS["text_dark"],
@@ -731,6 +1107,11 @@ class App(tk.Tk):
             t.insert("1.0", content or "")
             t.pack(fill=tk.X, padx=30, pady=3)
             text_widgets.append(t)
+
+            if field_type:
+                existing = self.db.get_images(qid, field_type)
+                edit_existing_images[field_type] = existing
+                img_refresh_fns[field_type] = _build_edit_img_row(edit_frame, field_type, existing)
 
         def save():
             new_title = title_e.get().strip()
@@ -746,6 +1127,17 @@ class App(tk.Tk):
             if cat_id is None:
                 messagebox.showwarning("提示", "请选择分类", parent=win)
                 return
+
+            for img_id in edit_deleted_image_ids:
+                self.db.delete_image(img_id)
+
+            for field_type, images in edit_temp_images.items():
+                for idx, img in enumerate(images):
+                    self.db.add_image(
+                        qid, field_type, img["file_path"],
+                        img["original_name"], idx
+                    )
+
             updates = {
                 "category_id": cat_id,
                 "title": new_title,

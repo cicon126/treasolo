@@ -22,6 +22,9 @@ export default {
           900: '#1e3a8a',
         },
       },
+      gridTemplateColumns: {
+        '16': 'repeat(16, minmax(0, 1fr))',
+      },
       animation: {
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'bounce-subtle': 'bounce 2s infinite',

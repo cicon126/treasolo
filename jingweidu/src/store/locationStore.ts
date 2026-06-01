@@ -2,6 +2,7 @@ import Taro from '@tarojs/taro';
 import { LocationData } from '../types/location';
 
 const STORAGE_KEY = 'location_history';
+const CURRENT_LOCATION_KEY = 'current_location';
 
 export const saveToHistory = (data: LocationData): void => {
   try {
@@ -40,13 +41,25 @@ export const clearHistory = (): void => {
   }
 };
 
-let currentLocation: LocationData | null = null;
-
 export const setCurrentLocation = (data: LocationData | null): void => {
-  currentLocation = data;
-  console.log('[LocationStore] 设置当前位置', data);
+  try {
+    if (data) {
+      Taro.setStorageSync(CURRENT_LOCATION_KEY, data);
+    } else {
+      Taro.removeStorageSync(CURRENT_LOCATION_KEY);
+    }
+    console.log('[LocationStore] 设置当前位置', data);
+  } catch (error) {
+    console.error('[LocationStore] 设置当前位置失败', error);
+  }
 };
 
 export const getCurrentLocation = (): LocationData | null => {
-  return currentLocation;
+  try {
+    const data = Taro.getStorageSync(CURRENT_LOCATION_KEY);
+    return data || null;
+  } catch (error) {
+    console.error('[LocationStore] 获取当前位置失败', error);
+    return null;
+  }
 };

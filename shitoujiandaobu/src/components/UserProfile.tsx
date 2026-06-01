@@ -43,7 +43,7 @@ const UserProfile = ({ userName, userAvatar, onNameChange, onAvatarChange }: Use
   const isEmojiAvatar = userAvatar.length <= 4;
 
   return (
-    <div className="flex items-center gap-4 bg-white/20 backdrop-blur-md rounded-2xl p-4 shadow-lg">
+    <div className="flex items-center gap-4 bg-white/20 backdrop-blur-md rounded-2xl p-4 shadow-lg relative overflow-visible" style={{ zIndex: isEditingAvatar ? 50 : 1 }}>
       <div className="relative">
         <div
           className="w-20 h-20 rounded-full bg-gradient-to-br from-pink-400 to-purple-500 flex items-center justify-center cursor-pointer hover:scale-105 transition-transform shadow-lg overflow-hidden"
@@ -57,7 +57,7 @@ const UserProfile = ({ userName, userAvatar, onNameChange, onAvatarChange }: Use
         </div>
 
         {isEditingAvatar && (
-          <div className="absolute top-full left-0 mt-2 bg-white rounded-xl shadow-2xl p-4 z-20 w-64">
+          <div className="absolute top-full left-0 mt-2 bg-white rounded-xl shadow-2xl p-4 w-64" style={{ zIndex: 9999 }}>
             <p className="text-sm text-gray-600 mb-3 font-medium">选择头像</p>
             <div className="grid grid-cols-4 gap-2 mb-3">
               {defaultAvatars.map((emoji, idx) => (

@@ -1,1 +1,0 @@
-import{r as t}from"./request-DeihKC2r.js";function r(o){return t.get("/book/list",{params:{keyword:o}})}function n(o){return t.post("/book",o)}function u(o){return t.put("/book",o)}function a(o){return t.delete(`/book/${o}`)}export{n as a,a as d,r as g,u};

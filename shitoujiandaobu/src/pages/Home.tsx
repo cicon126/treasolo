@@ -11,7 +11,6 @@ export default function Home() {
   const [userAvatar, setUserAvatar] = useState('😊');
   const [scores, setScores] = useState({ wins: 0, losses: 0, draws: 0 });
   const [showFireworks, setShowFireworks] = useState(false);
-  const [showVictoryText, setShowVictoryText] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
@@ -41,12 +40,10 @@ export default function Home() {
     if (result === 'win') {
       newScores.wins++;
       setShowFireworks(true);
-      setShowVictoryText(true);
       
       setTimeout(() => {
         setShowFireworks(false);
-        setShowVictoryText(false);
-      }, 4000);
+      }, 5000);
     } else if (result === 'lose') {
       newScores.losses++;
     } else {
@@ -66,12 +63,6 @@ export default function Home() {
   return (
     <div className="min-h-screen py-8 px-4">
       <Fireworks active={showFireworks} />
-      
-      {showVictoryText && (
-        <div className="victory-overlay">
-          <div className="victory-text">🎉 胜利！🎉</div>
-        </div>
-      )}
 
       <div className="max-w-4xl mx-auto">
         <h1 className="text-5xl font-bold text-center text-white mb-8 drop-shadow-lg">

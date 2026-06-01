@@ -60,11 +60,12 @@ export function isPast(date: Date): boolean {
   return compareDate < today;
 }
 
-export function generateTimeSlots(startHour: number = 8, endHour: number = 20): string[] {
+export function generateTimeSlots(startHour: number = 8, endHour: number = 20, interval: number = 15): string[] {
   const slots: string[] = [];
   for (let hour = startHour; hour < endHour; hour++) {
-    slots.push(`${String(hour).padStart(2, '0')}:00`);
-    slots.push(`${String(hour).padStart(2, '0')}:30`);
+    for (let minute = 0; minute < 60; minute += interval) {
+      slots.push(`${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`);
+    }
   }
   return slots;
 }

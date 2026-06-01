@@ -1,6 +1,8 @@
 import pygame
 import random
 import sys
+import os
+import math
 
 pygame.init()
 
@@ -17,33 +19,128 @@ RED = (255, 0, 0)
 BLUE = (0, 100, 255)
 GREEN = (0, 255, 0)
 GRAY = (128, 128, 128)
+DARK_GRAY = (60, 60, 60)
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("打飞机 - 收集金币")
+pygame.display.set_allow_screensaver(False)
 clock = pygame.time.Clock()
 
-font_big = pygame.font.Font(None, 48)
-font_medium = pygame.font.Font(None, 36)
-font_small = pygame.font.Font(None, 24)
+
+def get_chinese_font(size):
+    font_paths = [
+        "C:/Windows/Fonts/msyh.ttc",
+        "C:/Windows/Fonts/simhei.ttf",
+        "C:/Windows/Fonts/simsun.ttc",
+        "/System/Library/Fonts/PingFang.ttc",
+        "/usr/share/fonts/truetype/wqy/wqy-microhei.ttc",
+    ]
+    for path in font_paths:
+        if os.path.exists(path):
+            try:
+                return pygame.font.Font(path, size)
+            except:
+                continue
+    return pygame.font.SysFont("arial", size)
+
+
+font_big = get_chinese_font(48)
+font_medium = get_chinese_font(36)
+font_small = get_chinese_font(24)
+
+
+def draw_airplane(surface, cx, cy):
+    body_color = (50, 130, 220)
+    body_dark = (30, 90, 180)
+    wing_color = (40, 110, 200)
+    wing_dark = (25, 75, 160)
+    cockpit_color = (150, 220, 255)
+    tail_color = (40, 100, 190)
+    flame_yellow = (255, 200, 50)
+    flame_orange = (255, 130, 30)
+    flame_red = (255, 60, 20)
+
+    nose = (cx, cy - 22)
+    body_top_l = (cx - 6, cy - 10)
+    body_top_r = (cx + 6, cy - 10)
+    body_mid_l = (cx - 8, cy + 2)
+    body_mid_r = (cx + 8, cy + 2)
+    body_bot_l = (cx - 6, cy + 18)
+    body_bot_r = (cx + 6, cy + 18)
+    tail_top = (cx, cy + 14)
+
+    pygame.draw.polygon(surface, body_color, [
+        nose, body_top_r, body_mid_r, body_bot_r, body_bot_l, body_mid_l, body_top_l
+    ])
+    pygame.draw.polygon(surface, body_dark, [
+        body_top_r, body_mid_r, body_bot_r, body_bot_l, body_mid_l, body_top_l
+    ], 2)
+
+    left_wing = [
+        (cx - 8, cy - 2),
+        (cx - 28, cy + 8),
+        (cx - 26, cy + 12),
+        (cx - 6, cy + 6),
+    ]
+    right_wing = [
+        (cx + 8, cy - 2),
+        (cx + 28, cy + 8),
+        (cx + 26, cy + 12),
+        (cx + 6, cy + 6),
+    ]
+    pygame.draw.polygon(surface, wing_color, left_wing)
+    pygame.draw.polygon(surface, wing_dark, left_wing, 2)
+    pygame.draw.polygon(surface, wing_color, right_wing)
+    pygame.draw.polygon(surface, wing_dark, right_wing, 2)
+
+    pygame.draw.polygon(surface, (30, 70, 150), [
+        (cx - 3, cy + 14),
+        (cx - 14, cy + 20),
+        (cx - 12, cy + 23),
+        (cx - 3, cy + 18),
+    ])
+    pygame.draw.polygon(surface, (30, 70, 150), [
+        (cx + 3, cy + 14),
+        (cx + 14, cy + 20),
+        (cx + 12, cy + 23),
+        (cx + 3, cy + 18),
+    ])
+
+    pygame.draw.ellipse(surface, cockpit_color, (cx - 4, cy - 14, 8, 10))
+    pygame.draw.ellipse(surface, (100, 190, 255), (cx - 3, cy - 13, 6, 6))
+
+    pygame.draw.polygon(surface, flame_orange, [
+        (cx - 4, cy + 18),
+        (cx, cy + 28),
+        (cx + 4, cy + 18),
+    ])
+    pygame.draw.polygon(surface, flame_yellow, [
+        (cx - 2, cy + 18),
+        (cx, cy + 24),
+        (cx + 2, cy + 18),
+    ])
+    pygame.draw.polygon(surface, flame_red, [
+        (cx - 1, cy + 18),
+        (cx, cy + 21),
+        (cx + 1, cy + 18),
+    ])
 
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.width = 60
-        self.height = 40
+        self.height = 55
         self.image = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        pygame.draw.polygon(self.image, BLUE, [
-            (self.width // 2, 0),
-            (0, self.height),
-            (self.width, self.height)
-        ])
-        pygame.draw.rect(self.image, (0, 150, 255),
-                         (self.width // 2 - 8, self.height - 10, 16, 15))
+        draw_airplane(self.image, self.width // 2, self.height // 2 - 4)
         self.rect = self.image.get_rect()
         self.rect.centerx = WIDTH // 2
         self.rect.bottom = HEIGHT - 20
-        self.speed = 5
+        self.speed = 7
+        self.invincible = False
+        self.invincible_timer = 0
+        self.visible = True
+        self.flicker_timer = 0
 
     def update(self):
         keys = pygame.key.get_pressed()
@@ -55,6 +152,105 @@ class Player(pygame.sprite.Sprite):
             self.rect.left = 0
         if self.rect.right > WIDTH:
             self.rect.right = WIDTH
+
+        if self.invincible:
+            self.flicker_timer += 1
+            if self.flicker_timer % 6 < 3:
+                self.visible = True
+            else:
+                self.visible = False
+            self.invincible_timer -= 1
+            if self.invincible_timer <= 0:
+                self.invincible = False
+                self.visible = True
+        else:
+            self.visible = True
+
+    def draw(self, surface):
+        if self.visible:
+            surface.blit(self.image, self.rect)
+
+    def start_invincible(self, frames=90):
+        self.invincible = True
+        self.invincible_timer = frames
+        self.flicker_timer = 0
+
+
+class Explosion(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        pygame.sprite.Sprite.__init__(self)
+        self.x = x
+        self.y = y
+        self.frame = 0
+        self.max_frames = 30
+        self.particles = []
+        for _ in range(20):
+            angle = random.uniform(0, 2 * math.pi)
+            speed = random.uniform(1, 5)
+            size = random.randint(3, 8)
+            color = random.choice([
+                (255, 255, 100),
+                (255, 200, 50),
+                (255, 150, 30),
+                (255, 80, 20),
+                (255, 40, 10),
+            ])
+            self.particles.append({
+                'x': float(x),
+                'y': float(y),
+                'vx': math.cos(angle) * speed,
+                'vy': math.sin(angle) * speed,
+                'size': size,
+                'color': color,
+                'life': random.randint(10, 25),
+            })
+        self.ring_radius = 5
+        self.ring_alpha = 255
+        self.update_image()
+
+    def update_image(self):
+        size = 80
+        self.image = pygame.Surface((size, size), pygame.SRCALPHA)
+        cx, cy = size // 2, size // 2
+
+        for p in self.particles:
+            if p['life'] > 0:
+                px = int(p['x'] - self.x + cx)
+                py = int(p['y'] - self.y + cy)
+                s = max(1, int(p['size'] * (p['life'] / 25)))
+                pygame.draw.circle(self.image, p['color'], (px, py), s)
+
+        if self.ring_alpha > 0:
+            ring_surf = pygame.Surface((size, size), pygame.SRCALPHA)
+            ring_color = (255, 200, 100, max(0, min(255, int(self.ring_alpha))))
+            r = int(self.ring_radius)
+            if r > 2:
+                pygame.draw.circle(ring_surf, ring_color, (cx, cy), r, max(1, r // 4))
+                inner_color = (255, 255, 200, max(0, min(255, int(self.ring_alpha * 0.5))))
+                pygame.draw.circle(ring_surf, inner_color, (cx, cy), max(1, r // 2))
+            self.image.blit(ring_surf, (0, 0))
+
+        self.rect = self.image.get_rect()
+        self.rect.center = (int(self.x), int(self.y))
+
+    def update(self):
+        self.frame += 1
+
+        for p in self.particles:
+            if p['life'] > 0:
+                p['x'] += p['vx']
+                p['y'] += p['vy']
+                p['vy'] += 0.1
+                p['life'] -= 1
+                p['size'] *= 0.95
+
+        self.ring_radius += 3
+        self.ring_alpha -= 12
+
+        self.update_image()
+
+        if self.frame >= self.max_frames:
+            self.kill()
 
 
 class Coin(pygame.sprite.Sprite):
@@ -79,11 +275,30 @@ class Coin(pygame.sprite.Sprite):
 class Bomb(pygame.sprite.Sprite):
     def __init__(self, speed):
         pygame.sprite.Sprite.__init__(self)
-        self.size = 28
+        self.size = 30
         self.image = pygame.Surface((self.size, self.size), pygame.SRCALPHA)
-        pygame.draw.circle(self.image, (50, 50, 50), (self.size // 2, self.size // 2), self.size // 2)
-        pygame.draw.rect(self.image, (100, 50, 0), (self.size // 2 - 3, 0, 6, 8))
-        pygame.draw.circle(self.image, RED, (self.size // 2, 3), 4)
+        cx, cy = self.size // 2, self.size // 2 + 2
+
+        pygame.draw.circle(self.image, (40, 40, 40), (cx, cy), 12)
+        pygame.draw.circle(self.image, (70, 70, 70), (cx - 3, cy - 3), 4)
+        pygame.draw.circle(self.image, (90, 90, 90), (cx, cy), 12, 2)
+
+        pygame.draw.line(self.image, (120, 70, 20), (cx, cy - 12), (cx + 2, cy - 17), 3)
+
+        spark_x = cx + 2
+        spark_y = cy - 17
+        pygame.draw.circle(self.image, (255, 200, 50), (spark_x, spark_y), 4)
+        pygame.draw.circle(self.image, (255, 100, 30), (spark_x, spark_y), 2)
+
+        pts = [
+            (cx - 12, cy),
+            (cx - 8, cy - 4),
+            (cx - 12, cy - 8),
+            (cx - 6, cy - 4),
+            (cx, cy - 12),
+        ]
+        pygame.draw.lines(self.image, (200, 200, 200), False, pts, 2)
+
         self.rect = self.image.get_rect()
         self.rect.x = random.randint(0, WIDTH - self.size)
         self.rect.y = -self.size
@@ -103,6 +318,9 @@ class Game:
         self.spawn_timer = 0
         self.state = "start"
         self.running = True
+        self.explosions = pygame.sprite.Group()
+        self.shake_timer = 0
+        self.shake_offset = (0, 0)
 
     def get_spawn_interval(self):
         return max(15, 60 - self.level * 8)
@@ -118,8 +336,11 @@ class Game:
         self.all_sprites.empty()
         self.coins.empty()
         self.bombs.empty()
+        self.explosions.empty()
         self.player = Player()
         self.all_sprites.add(self.player)
+        self.shake_timer = 0
+        self.shake_offset = (0, 0)
 
     def start_new_level(self):
         self.level += 1
@@ -140,6 +361,7 @@ class Game:
         self.all_sprites.add(self.player)
 
         while self.running:
+            self.handle_events()
             if self.state == "playing":
                 self.update_playing()
             elif self.state == "start":
@@ -158,13 +380,11 @@ class Game:
         sys.exit()
 
     def update_playing(self):
-        self.handle_events()
-
         current_ticks = pygame.time.get_ticks()
         elapsed = (current_ticks - self.start_ticks) // 1000
         remaining = max(0, self.round_time - elapsed)
 
-        if remaining <= 0:
+        if remaining <= 0 and len(self.explosions) == 0:
             if self.bomb_hits < MAX_BOMB_HITS:
                 if self.level >= 5:
                     self.state = "win"
@@ -188,6 +408,7 @@ class Game:
                 self.all_sprites.add(coin)
 
         self.all_sprites.update()
+        self.explosions.update()
 
         for coin in self.coins:
             if coin.rect.top > HEIGHT:
@@ -201,42 +422,71 @@ class Game:
         for hit in coin_hits:
             self.score += 10
 
-        bomb_hits = pygame.sprite.spritecollide(self.player, self.bombs, True)
-        for hit in bomb_hits:
-            self.bomb_hits += 1
-            if self.bomb_hits >= MAX_BOMB_HITS:
-                self.state = "game_over"
-                return
+        if not self.player.invincible:
+            bomb_hits = pygame.sprite.spritecollide(self.player, self.bombs, True)
+            for hit in bomb_hits:
+                self.bomb_hits += 1
+                ex = self.player.rect.centerx
+                ey = self.player.rect.centery
+                explosion = Explosion(ex, ey)
+                self.explosions.add(explosion)
+                self.shake_timer = 15
+                if self.bomb_hits < MAX_BOMB_HITS:
+                    self.player.start_invincible(90)
+
+        if self.shake_timer > 0:
+            self.shake_timer -= 1
+            intensity = self.shake_timer
+            self.shake_offset = (
+                random.randint(-intensity, intensity),
+                random.randint(-intensity, intensity)
+            )
+        else:
+            self.shake_offset = (0, 0)
+
+        if self.bomb_hits >= MAX_BOMB_HITS and len(self.explosions) == 0:
+            self.state = "game_over"
+            return
 
         self.draw_playing(remaining)
 
     def draw_playing(self, remaining):
-        screen.fill(BLACK)
-        self.all_sprites.draw(screen)
+        render_surface = pygame.Surface((WIDTH, HEIGHT))
+        render_surface.fill(BLACK)
+
+        for sprite in self.all_sprites:
+            if isinstance(sprite, Player):
+                sprite.draw(render_surface)
+            else:
+                render_surface.blit(sprite.image, sprite.rect)
+
+        for exp in self.explosions:
+            render_surface.blit(exp.image, exp.rect)
 
         score_text = font_medium.render(f"得分: {self.score}", True, WHITE)
-        screen.blit(score_text, (10, 10))
+        render_surface.blit(score_text, (10, 10))
 
         level_text = font_medium.render(f"第 {self.level} 关", True, WHITE)
-        screen.blit(level_text, (WIDTH - 120, 10))
+        render_surface.blit(level_text, (WIDTH - 120, 10))
 
         time_text = font_medium.render(f"时间: {remaining}秒", True, GREEN if remaining > 10 else RED)
-        screen.blit(time_text, (WIDTH // 2 - 60, 10))
+        render_surface.blit(time_text, (WIDTH // 2 - 60, 10))
 
         for i in range(MAX_BOMB_HITS):
             color = RED if i < self.bomb_hits else GRAY
-            pygame.draw.circle(screen, color, (30 + i * 35, HEIGHT - 30), 12)
+            pygame.draw.circle(render_surface, color, (30 + i * 35, HEIGHT - 30), 12)
             if i < self.bomb_hits:
-                pygame.draw.line(screen, WHITE, (22 + i * 35, HEIGHT - 38),
+                pygame.draw.line(render_surface, WHITE, (22 + i * 35, HEIGHT - 38),
                                  (38 + i * 35, HEIGHT - 22), 3)
-                pygame.draw.line(screen, WHITE, (38 + i * 35, HEIGHT - 38),
+                pygame.draw.line(render_surface, WHITE, (38 + i * 35, HEIGHT - 38),
                                  (22 + i * 35, HEIGHT - 22), 3)
 
         bomb_label = font_small.render("生命:", True, WHITE)
-        screen.blit(bomb_label, (10, HEIGHT - 55))
+        render_surface.blit(bomb_label, (10, HEIGHT - 55))
+
+        screen.blit(render_surface, self.shake_offset)
 
     def update_start(self):
-        self.handle_events()
         screen.fill(BLACK)
 
         title = font_big.render("打飞机", True, BLUE)
@@ -265,7 +515,6 @@ class Game:
             y += 30
 
     def update_level_complete(self):
-        self.handle_events()
         screen.fill(BLACK)
 
         title = font_big.render(f"第 {self.level} 关 通过!", True, GREEN)
@@ -285,7 +534,6 @@ class Game:
         screen.blit(hint, hint_rect)
 
     def update_game_over(self):
-        self.handle_events()
         screen.fill(BLACK)
 
         title = font_big.render("游戏结束!", True, RED)
@@ -305,7 +553,6 @@ class Game:
         screen.blit(hint, hint_rect)
 
     def update_win(self):
-        self.handle_events()
         screen.fill(BLACK)
 
         title = font_big.render("恭喜通关!", True, GOLD)
