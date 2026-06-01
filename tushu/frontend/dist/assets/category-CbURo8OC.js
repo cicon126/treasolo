@@ -1,0 +1,1 @@
+import{r as e}from"./request-DeihKC2r.js";function a(t){return e.get("/category/list",{params:{name:t}})}function o(t){return e.post("/category",t)}function n(t){return e.put("/category",t)}function u(t){return e.delete(`/category/${t}`)}export{o as a,u as d,a as g,n as u};

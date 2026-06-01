@@ -1,0 +1,27 @@
+[12:06:51.585] Server listening on port 55427, PID 15964
+[12:06:51.663] readProjectFiles, Found 28 files to read.
+[12:06:51.691] Starting PAI Cloud Dev...
+[12:06:52.738] [PAI SDK] createCloudSession response: {
+  "code": 0,
+  "msg": "success",
+  "sandboxId": "vefaas-f0vkicge-pyw70jixna-d8egan82ru0lkmoiqva0-sandbox",
+  "endpoint": "https://sd62opo6oqou1ckhsuo00.apigateway-cn-beijing.volceapi.com"
+}
+[12:06:52.817] [PAI SDK] cloudServer.start called, appId: pai-preview-trae-3f70301d
+[12:06:53.232] [PAI SDK] Received event: log {"content":"\n> taro_template@1.0.0 dev:h5\n> npm run build:h5 -- --watch\n\n\n> taro_template@1.0.0 build:h5\n> taro build --type h5 --watch\n\n","timestamp":1780286814282}
+[12:06:53.575] [PAI SDK] Received event: log {"content":"👽 Taro v4.1.9\n\n","timestamp":1780286814629}
+[12:06:54.774] [PAI SDK] Received event: log {"content":"Tips:\n1. 建议开启持久化缓存功能，能有效提升二次编译速度，详情请参考: https://docs.taro.zone/docs/config-detail#cache。\n\n\n","timestamp":1780286815829}
+[12:06:55.854] [PAI SDK] Received event: log {"content":"- 即将开始启动编译，请稍等~\n","timestamp":1780286816908}
+[12:07:05.457] [Preview Server] Frontend connected, clients size = 1
+[12:07:09.195] [PAI SDK] Received event: log {"content":"✅  编译成功 6/1/2026, 12:07:10 PM\n\n","timestamp":1780286830250}
+[12:07:09.198] [PAI SDK] cloudServer.start response: {
+  "status": "running",
+  "msg": "Cloud Server started successfully.",
+  "hash": "pai-preview-trae-3f70301d"
+}
+[12:28:22.587] [PAI SDK] Received event: log {"content":"✅  编译成功 6/1/2026, 12:28:23 PM\n\n","timestamp":1780288103645}
+[13:14:33.636] [Preview Server] Frontend disconnected, clients size = 1
+[15:33:39.535] [PAI SDK] WebSocket closed, reconnecting (1/3)...
+[15:33:39.536] Heartbeat timeout.
+[15:33:39.536] Shutting down...
+[15:33:39.567] Stopping Cloud Dev...

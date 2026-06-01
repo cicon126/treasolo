@@ -1,0 +1,136 @@
+[20:28:10.104] Server listening on port 51510, PID 7568
+[20:28:10.135] readProjectFiles, Found 35 files to read.
+[20:28:10.168] Starting PAI Cloud Dev...
+[20:28:10.471] [PAI SDK] createCloudSession response: {
+  "code": 0,
+  "msg": "success",
+  "sandboxId": "vefaas-f0vkicge-pyw70jixna-d8e1mkg2op1mmqge2rc0-sandbox",
+  "endpoint": "https://sd62opo6oqou1ckhsuo00.apigateway-cn-beijing.volceapi.com"
+}
+[20:28:10.589] [PAI SDK] cloudServer.start called, appId: pai-preview-trae-45361881
+[20:28:11.005] [PAI SDK] Received event: log {"content":"\n> taro_template@1.0.0 dev:h5\n> npm run build:h5 -- --watch\n\n","timestamp":1780230491925}
+[20:28:11.195] [PAI SDK] Received event: log {"content":"\n> taro_template@1.0.0 build:h5\n> taro build --type h5 --watch\n\n","timestamp":1780230492115}
+[20:28:11.688] [PAI SDK] Received event: log {"content":"👽 Taro v4.1.9\n\n","timestamp":1780230492606}
+[20:28:13.522] [PAI SDK] Received event: log {"content":"Tips:\n1. 建议开启持久化缓存功能，能有效提升二次编译速度，详情请参考: https://docs.taro.zone/docs/config-detail#cache。\n\n\n","timestamp":1780230494441}
+[20:28:17.272] [PAI SDK] Received event: log {"content":"ℹ 预览端口 10086 被占用, 自动切换到空闲端口 10088\n","timestamp":1780230498191}
+[20:28:17.837] [PAI SDK] Received event: log {"content":"- 即将开始启动编译，请稍等~\n","timestamp":1780230498756}
+[20:28:32.418] [PAI SDK] Received event: log {"content":"🙅   编译失败. 5/31/2026, 8:28:33 PM\n\n","timestamp":1780230513338}
+[20:28:32.426] [PAI SDK] cloudServer.start response: {
+  "status": "running",
+  "msg": "Cloud Server started successfully.",
+  "hash": "pai-preview-trae-45361881"
+}
+[20:28:32.526] [PAI SDK] Received event: compile_error [{"filename":"","lineNumber":0,"description":"ERROR in ./src/app.tsx 6:0-53\nModule not found: Error: Can't resolve './store/prizeContext' in '/src'\n   @ ./src/app.config.ts\n\nERROR in ./src/pages/history/index.tsx 9:0-55\nModule not found: Error: Can't resolve '@/store/prizeContext' in '/src/pages/history'\n   @ ./src/app.config.ts\n\nERROR in ./src/pages/prizes/index.tsx 13:0-55\nModule not found: Error: Can't resolve '@/store/prizeContext' in '/src/pages/prizes'\n   @ ./src/app.config.ts\n\nERROR in ./src/pages/wheel/index.tsx 11:0-55\nModule not found: Error: Can't resolve '@/store/prizeContext' in '/src/pages/wheel'\n   @ ./src/app.config.ts\n\nERROR in ./src/pages/wheel/index.module.scss (../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/css-loader@7.1.4_webpack@5.78.0_@swc+core@1.3.96_postcss@8.5.14_/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].oneOf[0].use[0]!../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/postcss-loader@8.2.1_postcss@8.5.14_typescript@5.9.3_webpack@5.78.0_@swc+core@1.3.96_postcss@8.5.14_/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[0]!../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js!../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/sass-loader@14.2.1_sass@1.99.0_webpack@5.78.0_@swc+core@1.3.96_postcss@8.5.14_/node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[5].use[1]!./src/pages/wheel/index.module.scss)\nModule build failed (from ../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/sass-loader@14.2.1_sass@1.99.0_webpack@5.78.0_@swc+core@1.3.96_postcss@8.5.14_/node_modules/sass-loader/dist/cjs.js):\nUndefined variable.\n   ╷\n60 │   padding: $spacing-xxl 0;\n   │            ^^^^^^^^^^^^\n   ╵\n  src/pages/wheel/index.module.scss 60:12  root stylesheet\n   @ ./src/pages/wheel/index.module.scss\n   @ ./src/pages/wheel/index.tsx\n   @ ./src/app.config.ts\n\n4 errors have detailed information that is not shown.\nUse 'stats.errorDetails: true' resp. '--stats-error-details' to show it.","timestamp":1780230513441}]
+[20:28:32.530] [PAI SDK] Received event: log {"content":"resolve './store/prizeContext' in '/tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/src'\n  using description file: /tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/package.json (relative path: ./src)\n    resolve multi platform file path\n      using description file: /tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/package.json (relative path: ./src)\n        Field 'browser' doesn't contain a valid alias configuration\n        root path /tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q\n          using description file: /tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/package.json (relative path: ./tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/src/store/prizeContext)\n            no extension\n              Field 'browser' doesn't contain a valid alias configuration\n              /tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/src/store/prizeContext doesn't exist\n            .js\n              Field 'browser' doesn't contain a valid alias configuration\n              /tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/src/store/prizeContext.js doesn't exist\n            .jsx\n              Field 'browser' doesn't contain a valid alias configuration\n              /tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/src/store/prizeContext.jsx doesn't exist\n            .ts\n              Field 'browser' doesn't contain a valid alias configuration\n              /tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/src/store/prizeContext.ts doesn't exist\n            .tsx\n              Field 'browser' doesn't contain a valid alias configuration\n              /tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/src/store/prizeContext.tsx doesn't exist\n            .mjs\n              Field 'browser' doesn't contain a valid alias configuration\n              /tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/src/store/prizeContext.mjs doesn't exist\n            .vue\n              Field 'browser' doesn't contain a valid alias configuration\n              /tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/src/store/prizeContext.vue doesn't exist\n            as directory\n              /tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/src/store/prizeContext doesn't exist\n        using description file: /tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/package.json (relative path: ./src/store/prizeContext)\n          no extension\n            Field 'browser' doesn't contain a valid alias configuration\n            /tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/src/store/prizeContext doesn't exist\n          .js\n            Field 'browser' doesn't contain a valid alias configuration\n            /tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/src/store/prizeContext.js doesn't exist\n          .jsx\n            Field 'browser' doesn't contain a valid alias configuration\n            /tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/src/store/prizeContext.jsx doesn't exist\n          .ts\n            Field 'browser' doesn't contain a valid alias configuration\n            /tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/src/store/prizeContext.ts doesn't exist\n          .tsx\n            Field 'browser' doesn't contain a valid alias configuration\n            /tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/src/store/prizeContext.tsx doesn't exist\n          .mjs\n            Field 'browser' doesn't contain a valid alias configuration\n            /tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/src/store/prizeContext.mjs doesn't exist\n          .vue\n            Field 'browser' doesn't contain a valid alias configuration\n            /tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/src/store/prizeContext.vue doesn't exist\n          as directory\n            /tmp/aipa-cloud-build/j5yQIj7Ztfhvy7CvmWB9Q/src/store/prizeContext doesn't exist\n\n\nℹ️  Listening at http://9.97.122.228:10088/\n\n监听文件修改中...\n\n","timestamp":1780230513445}
+[20:28:37.323] [Preview Server] Frontend connected, clients size = 1
+[20:28:37.324] Sending cached status to new connection, lastStatusMessage = {"event":"status_change","message":{"url":"https://sd62opo6oqou1ckhsuo00.apigateway-cn-beijing.volceapi.com/?faasInstanceName=vefaas-f0vkicge-pyw70jixna-d8e1mkg2op1mmqge2rc0-sandbox&hash=pai-preview-trae-45361881","schema":"aipa://preview?type=pai&aipa_id=pai-preview-trae-45361881&uuid=4ff6d4e4-bd32-4899-86ce-27c1ddcff524","status":"running","msg":"Cloud Server started successfully.","framework":"taro"}}
+[20:28:37.324] Sending cached status to new connection, lastErrorMessage = {"event":"compile_error","message":[{"filename":"","lineNumber":0,"description":"ERROR in ./src/app.tsx 6:0-53\nModule not found: Error: Can't resolve './store/prizeContext' in '/src'\n   @ ./src/app.config.ts\n\nERROR in ./src/pages/history/index.tsx 9:0-55\nModule not found: Error: Can't resolve '@/store/prizeContext' in '/src/pages/history'\n   @ ./src/app.config.ts\n\nERROR in ./src/pages/prizes/index.tsx 13:0-55\nModule not found: Error: Can't resolve '@/store/prizeContext' in '/src/pages/prizes'\n   @ ./src/app.config.ts\n\nERROR in ./src/pages/wheel/index.tsx 11:0-55\nModule not found: Error: Can't resolve '@/store/prizeContext' in '/src/pages/wheel'\n   @ ./src/app.config.ts\n\nERROR in ./src/pages/wheel/index.module.scss (../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/css-loader@7.1.4_webpack@5.78.0_@swc+core@1.3.96_postcss@8.5.14_/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].oneOf[0].use[0]!../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/postcss-loader@8.2.1_postcss@8.5.14_typescript@5.9.3_webpack@5.78.0_@swc+core@1.3.96_postcss@8.5.14_/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[0]!../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js!../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/sass-loader@14.2.1_sass@1.99.0_webpack@5.78.0_@swc+core@1.3.96_postcss@8.5.14_/node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[5].use[1]!./src/pages/wheel/index.module.scss)\nModule build failed (from ../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/sass-loader@14.2.1_sass@1.99.0_webpack@5.78.0_@swc+core@1.3.96_postcss@8.5.14_/node_modules/sass-loader/dist/cjs.js):\nUndefined variable.\n   ╷\n60 │   padding: $spacing-xxl 0;\n   │            ^^^^^^^^^^^^\n   ╵\n  src/pages/wheel/index.module.scss 60:12  root stylesheet\n   @ ./src/pages/wheel/index.module.scss\n   @ ./src/pages/wheel/index.tsx\n   @ ./src/app.config.ts\n\n4 errors have detailed information that is not shown.\nUse 'stats.errorDetails: true' resp. '--stats-error-details' to show it.","timestamp":1780230513441}]}
+[21:12:14.531] File change detected. Updating...
+[21:12:14.538] readProjectFiles, Found 35 files to read.
+[21:12:14.549] Files read. Count: 35
+[21:12:14.549] Calling pai.updateCloudDev...
+[21:12:14.550] [PAI SDK] cloudServer.update called, appId: pai-preview-trae-45361881
+[21:12:14.591] [PAI SDK] Received event: reload {"url":"aipa://pai-preview-trae-45361881.aipa-cloud.bytedance.net?type=pai","timestamp":1780233135518}
+[21:12:14.592] [PAI SDK] CloudServer received reload event: {"url":"aipa://pai-preview-trae-45361881.aipa-cloud.bytedance.net?type=pai","timestamp":1780233135518}
+[21:12:14.592] [PAI SDK] reload, url = https://sd62opo6oqou1ckhsuo00.apigateway-cn-beijing.volceapi.com/?faasInstanceName=vefaas-f0vkicge-pyw70jixna-d8e1mkg2op1mmqge2rc0-sandbox&hash=pai-preview-trae-45361881
+[21:12:14.592] [PAI SDK] cloudServer.update response: {
+  "status": "running",
+  "reload": false,
+  "hash": "pai-preview-trae-45361881"
+}
+[21:12:14.593] Update success (pai.updateCloudDev returned)
+[21:12:16.299] [PAI SDK] Received event: log {"content":"🙅   编译失败. 5/31/2026, 9:12:17 PM\n\n","timestamp":1780233137225}
+[21:12:16.329] [PAI SDK] Received event: compile_error [{"filename":"","lineNumber":0,"description":"ERROR in ./src/pages/wheel/index.module.scss (../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/css-loader@7.1.4_webpack@5.78.0_@swc+core@1.3.96_postcss@8.5.14_/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].oneOf[0].use[0]!../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/postcss-loader@8.2.1_postcss@8.5.14_typescript@5.9.3_webpack@5.78.0_@swc+core@1.3.96_postcss@8.5.14_/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[0]!../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js!../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/sass-loader@14.2.1_sass@1.99.0_webpack@5.78.0_@swc+core@1.3.96_postcss@8.5.14_/node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[5].use[1]!./src/pages/wheel/index.module.scss)\nModule build failed (from ../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/sass-loader@14.2.1_sass@1.99.0_webpack@5.78.0_@swc+core@1.3.96_postcss@8.5.14_/node_modules/sass-loader/dist/cjs.js):\nUndefined variable.\n   ╷\n60 │   padding: $spacing-xxl 0;\n   │            ^^^^^^^^^^^^\n   ╵\n  src/pages/wheel/index.module.scss 60:12  root stylesheet\n   @ ./src/pages/wheel/index.module.scss\n   @ ./src/pages/wheel/index.tsx\n   @ ./src/app.config.ts","timestamp":1780233137247}]
+[21:12:16.399] [PAI SDK] Received event: log {"content":"ModuleBuildError: Module build failed (from ../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/sass-loader@14.2.1_sass@1.99.0_webpack@5.78.0_@swc+core@1.3.96_postcss@8.5.14_/node_modules/sass-loader/dist/cjs.js):\nUndefined variable.\n   ╷\n60 │   padding: $spacing-xxl 0;\n   │            ^^^^^^^^^^^^\n   ╵\n  src/pages/wheel/index.module.scss 60:12  root stylesheet\n\n","timestamp":1780233137325}
+[21:12:40.343] Received update request via HTTP
+[21:12:42.344] File change detected. Updating...
+[21:12:42.354] readProjectFiles, Found 35 files to read.
+[21:12:42.363] Files read. Count: 35
+[21:12:42.364] Calling pai.updateCloudDev...
+[21:12:42.364] [PAI SDK] cloudServer.update called, appId: pai-preview-trae-45361881
+[21:12:42.415] [PAI SDK] Received event: reload {"url":"aipa://pai-preview-trae-45361881.aipa-cloud.bytedance.net?type=pai","timestamp":1780233163336}
+[21:12:42.416] [PAI SDK] CloudServer received reload event: {"url":"aipa://pai-preview-trae-45361881.aipa-cloud.bytedance.net?type=pai","timestamp":1780233163336}
+[21:12:42.416] [PAI SDK] reload, url = https://sd62opo6oqou1ckhsuo00.apigateway-cn-beijing.volceapi.com/?faasInstanceName=vefaas-f0vkicge-pyw70jixna-d8e1mkg2op1mmqge2rc0-sandbox&hash=pai-preview-trae-45361881
+[21:12:42.416] [PAI SDK] cloudServer.update response: {
+  "status": "running",
+  "reload": false,
+  "hash": "pai-preview-trae-45361881"
+}
+[21:12:42.417] Update success (pai.updateCloudDev returned)
+[21:12:42.544] [PAI SDK] Received event: log {"content":"<i> [webpack-dev-middleware] wait until bundle finished: /\n","timestamp":1780233163416}
+[21:12:43.635] [PAI SDK] Received event: log {"content":"🙅   编译失败. 5/31/2026, 9:12:44 PM\n\n","timestamp":1780233164561}
+[21:12:43.664] [PAI SDK] Received event: compile_error [{"filename":"","lineNumber":0,"description":"ERROR in ./src/pages/wheel/index.module.scss (../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/css-loader@7.1.4_webpack@5.78.0_@swc+core@1.3.96_postcss@8.5.14_/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].oneOf[0].use[0]!../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/postcss-loader@8.2.1_postcss@8.5.14_typescript@5.9.3_webpack@5.78.0_@swc+core@1.3.96_postcss@8.5.14_/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[0]!../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js!../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/sass-loader@14.2.1_sass@1.99.0_webpack@5.78.0_@swc+core@1.3.96_postcss@8.5.14_/node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[5].use[1]!./src/pages/wheel/index.module.scss)\nModule build failed (from ../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/sass-loader@14.2.1_sass@1.99.0_webpack@5.78.0_@swc+core@1.3.96_postcss@8.5.14_/node_modules/sass-loader/dist/cjs.js):\nUndefined variable.\n   ╷\n60 │   padding: $spacing-xxl 0;\n   │            ^^^^^^^^^^^^\n   ╵\n  src/pages/wheel/index.module.scss 60:12  root stylesheet\n   @ ./src/pages/wheel/index.module.scss\n   @ ./src/pages/wheel/index.tsx\n   @ ./src/app.config.ts","timestamp":1780233164587}]
+[21:12:43.738] [PAI SDK] Received event: log {"content":"ModuleBuildError: Module build failed (from ../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/sass-loader@14.2.1_sass@1.99.0_webpack@5.78.0_@swc+core@1.3.96_postcss@8.5.14_/node_modules/sass-loader/dist/cjs.js):\nUndefined variable.\n   ╷\n60 │   padding: $spacing-xxl 0;\n   │            ^^^^^^^^^^^^\n   ╵\n  src/pages/wheel/index.module.scss 60:12  root stylesheet\n\n","timestamp":1780233164664}
+[21:12:50.675] [Preview Server] Frontend disconnected, clients size = 1
+[21:12:51.065] [Preview Server] Frontend connected, clients size = 1
+[21:12:51.066] Sending cached status to new connection, lastStatusMessage = {"event":"status_change","message":{"url":"https://sd62opo6oqou1ckhsuo00.apigateway-cn-beijing.volceapi.com/?faasInstanceName=vefaas-f0vkicge-pyw70jixna-d8e1mkg2op1mmqge2rc0-sandbox&hash=pai-preview-trae-45361881","schema":"aipa://preview?type=pai&aipa_id=pai-preview-trae-45361881&uuid=4ff6d4e4-bd32-4899-86ce-27c1ddcff524","status":"running","framework":"taro"}}
+[21:12:51.066] Sending cached status to new connection, lastErrorMessage = {"event":"compile_error","message":[{"filename":"","lineNumber":0,"description":"ERROR in ./src/pages/wheel/index.module.scss (../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/css-loader@7.1.4_webpack@5.78.0_@swc+core@1.3.96_postcss@8.5.14_/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].oneOf[0].use[0]!../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/postcss-loader@8.2.1_postcss@8.5.14_typescript@5.9.3_webpack@5.78.0_@swc+core@1.3.96_postcss@8.5.14_/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[0]!../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/resolve-url-loader@5.0.0/node_modules/resolve-url-loader/index.js!../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/sass-loader@14.2.1_sass@1.99.0_webpack@5.78.0_@swc+core@1.3.96_postcss@8.5.14_/node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[5].use[1]!./src/pages/wheel/index.module.scss)\nModule build failed (from ../../../var/cache/aipa-dev-server/prewarm/taro/a1bbf427d8f435dfb115d5256b2475a3/node_modules/.pnpm/sass-loader@14.2.1_sass@1.99.0_webpack@5.78.0_@swc+core@1.3.96_postcss@8.5.14_/node_modules/sass-loader/dist/cjs.js):\nUndefined variable.\n   ╷\n60 │   padding: $spacing-xxl 0;\n   │            ^^^^^^^^^^^^\n   ╵\n  src/pages/wheel/index.module.scss 60:12  root stylesheet\n   @ ./src/pages/wheel/index.module.scss\n   @ ./src/pages/wheel/index.tsx\n   @ ./src/app.config.ts","timestamp":1780233164587}]}
+[21:19:40.625] File change detected. Updating...
+[21:19:40.630] readProjectFiles, Found 35 files to read.
+[21:19:40.638] Files read. Count: 35
+[21:19:40.638] Calling pai.updateCloudDev...
+[21:19:40.639] [PAI SDK] cloudServer.update called, appId: pai-preview-trae-45361881
+[21:19:40.686] [PAI SDK] Received event: reload {"url":"aipa://pai-preview-trae-45361881.aipa-cloud.bytedance.net?type=pai","timestamp":1780233581612}
+[21:19:40.687] [PAI SDK] CloudServer received reload event: {"url":"aipa://pai-preview-trae-45361881.aipa-cloud.bytedance.net?type=pai","timestamp":1780233581612}
+[21:19:40.687] [PAI SDK] reload, url = https://sd62opo6oqou1ckhsuo00.apigateway-cn-beijing.volceapi.com/?faasInstanceName=vefaas-f0vkicge-pyw70jixna-d8e1mkg2op1mmqge2rc0-sandbox&hash=pai-preview-trae-45361881
+[21:19:40.688] [PAI SDK] cloudServer.update response: {
+  "status": "running",
+  "reload": false,
+  "hash": "pai-preview-trae-45361881"
+}
+[21:19:40.689] Update success (pai.updateCloudDev returned)
+[21:19:40.737] [PAI SDK] Received event: log {"content":"<i> [webpack-dev-middleware] wait until bundle finished: /\n","timestamp":1780233581664}
+[21:19:42.167] [PAI SDK] Received event: log {"content":"✅  编译成功 5/31/2026, 9:19:43 PM\n\n","timestamp":1780233583089}
+[21:19:46.561] File change detected. Updating...
+[21:19:46.571] readProjectFiles, Found 35 files to read.
+[21:19:46.579] Files read. Count: 35
+[21:19:46.579] Calling pai.updateCloudDev...
+[21:19:46.580] [PAI SDK] cloudServer.update called, appId: pai-preview-trae-45361881
+[21:19:46.621] [PAI SDK] Received event: reload {"url":"aipa://pai-preview-trae-45361881.aipa-cloud.bytedance.net?type=pai","timestamp":1780233587549}
+[21:19:46.621] [PAI SDK] CloudServer received reload event: {"url":"aipa://pai-preview-trae-45361881.aipa-cloud.bytedance.net?type=pai","timestamp":1780233587549}
+[21:19:46.621] [PAI SDK] reload, url = https://sd62opo6oqou1ckhsuo00.apigateway-cn-beijing.volceapi.com/?faasInstanceName=vefaas-f0vkicge-pyw70jixna-d8e1mkg2op1mmqge2rc0-sandbox&hash=pai-preview-trae-45361881
+[21:19:46.622] [PAI SDK] cloudServer.update response: {
+  "status": "running",
+  "reload": false,
+  "hash": "pai-preview-trae-45361881"
+}
+[21:19:46.622] Update success (pai.updateCloudDev returned)
+[21:19:46.767] [PAI SDK] Received event: log {"content":"<i> [webpack-dev-middleware] wait until bundle finished: /\n","timestamp":1780233587578}
+[21:19:47.512] [PAI SDK] Received event: log {"content":"✅  编译成功 5/31/2026, 9:19:48 PM\n\n","timestamp":1780233588440}
+[21:20:07.931] File change detected. Updating...
+[21:20:07.938] readProjectFiles, Found 35 files to read.
+[21:20:07.946] Files read. Count: 35
+[21:20:07.946] Calling pai.updateCloudDev...
+[21:20:07.946] [PAI SDK] cloudServer.update called, appId: pai-preview-trae-45361881
+[21:20:07.992] [PAI SDK] Received event: reload {"url":"aipa://pai-preview-trae-45361881.aipa-cloud.bytedance.net?type=pai","timestamp":1780233608916}
+[21:20:07.993] [PAI SDK] CloudServer received reload event: {"url":"aipa://pai-preview-trae-45361881.aipa-cloud.bytedance.net?type=pai","timestamp":1780233608916}
+[21:20:07.993] [PAI SDK] reload, url = https://sd62opo6oqou1ckhsuo00.apigateway-cn-beijing.volceapi.com/?faasInstanceName=vefaas-f0vkicge-pyw70jixna-d8e1mkg2op1mmqge2rc0-sandbox&hash=pai-preview-trae-45361881
+[21:20:07.993] [PAI SDK] cloudServer.update response: {
+  "status": "running",
+  "reload": false,
+  "hash": "pai-preview-trae-45361881"
+}
+[21:20:07.993] Update success (pai.updateCloudDev returned)
+[21:20:08.017] [PAI SDK] Received event: log {"content":"<i> [webpack-dev-middleware] wait until bundle finished: /\n","timestamp":1780233608944}
+[21:20:09.035] [PAI SDK] Received event: log {"content":"✅  编译成功 5/31/2026, 9:20:09 PM\n\n","timestamp":1780233609962}
+[21:20:21.004] Received update request via HTTP
+[21:20:23.013] File change detected. Updating...
+[21:20:23.020] readProjectFiles, Found 35 files to read.
+[21:20:23.030] Files read. Count: 35
+[21:20:23.030] Calling pai.updateCloudDev...
+[21:20:23.030] [PAI SDK] cloudServer.update called, appId: pai-preview-trae-45361881
+[21:20:23.188] [PAI SDK] Received event: reload {"url":"aipa://pai-preview-trae-45361881.aipa-cloud.bytedance.net?type=pai","timestamp":1780233624114}
+[21:20:23.188] [PAI SDK] CloudServer received reload event: {"url":"aipa://pai-preview-trae-45361881.aipa-cloud.bytedance.net?type=pai","timestamp":1780233624114}
+[21:20:23.189] [PAI SDK] reload, url = https://sd62opo6oqou1ckhsuo00.apigateway-cn-beijing.volceapi.com/?faasInstanceName=vefaas-f0vkicge-pyw70jixna-d8e1mkg2op1mmqge2rc0-sandbox&hash=pai-preview-trae-45361881
+[21:20:23.189] [PAI SDK] cloudServer.update response: {
+  "status": "running",
+  "reload": false,
+  "hash": "pai-preview-trae-45361881"
+}
+[21:20:23.189] Update success (pai.updateCloudDev returned)
+[21:20:23.237] [PAI SDK] Received event: log {"content":"<i> [webpack-dev-middleware] wait until bundle finished: /\n","timestamp":1780233624149}
+[21:20:23.954] [PAI SDK] Received event: log {"content":"✅  编译成功 5/31/2026, 9:20:24 PM\n\n","timestamp":1780233624882}
+[21:20:32.804] [Preview Server] Frontend disconnected, clients size = 1
+[21:20:33.156] [Preview Server] Frontend connected, clients size = 1
+[21:20:33.156] Sending cached status to new connection, lastStatusMessage = {"event":"status_change","message":{"url":"https://sd62opo6oqou1ckhsuo00.apigateway-cn-beijing.volceapi.com/?faasInstanceName=vefaas-f0vkicge-pyw70jixna-d8e1mkg2op1mmqge2rc0-sandbox&hash=pai-preview-trae-45361881","schema":"aipa://preview?type=pai&aipa_id=pai-preview-trae-45361881&uuid=4ff6d4e4-bd32-4899-86ce-27c1ddcff524","status":"running","framework":"taro"}}
+[21:24:06.258] [Preview Server] Frontend disconnected, clients size = 1
