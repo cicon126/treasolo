@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个税计算器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div class="container">
+        <div class="calculator-card">
+            <div class="card-header">
+                <h1>个税计算器</h1>
+                <p class="subtitle">2024年最新税率 · 快速计算</p>
+            </div>
+
+            <form id="taxForm" class="form-section">
+                <div class="input-group">
+                    <label for="salary">税前月工资（元）</label>
+                    <input type="number" id="salary" class="input-field" placeholder="请输入税前工资" value="15000" min="0">
+                </div>
+
+                <div class="divider">
+                    <span>五险一金扣除比例</span>
+                </div>
+
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input type="radio" name="insuranceBase" value="actual" checked>
+                        <span class="radio-custom"></span>
+                        <span>按实际工资缴纳</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="insuranceBase" value="minimum">
+                        <span class="radio-custom"></span>
+                        <span>按最低工资标准缴纳</span>
+                    </label>
+                </div>
+
+                <div class="input-group" id="minimumWageGroup" style="display: none;">
+                    <label for="minimumWage">当地最低工资标准（元）</label>
+                    <input type="number" id="minimumWage" class="input-field" placeholder="请输入当地最低工资" value="2690" min="0">
+                    <small class="hint">如：北京2690、上海2690、深圳2360、广州2300</small>
+                </div>
+
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>养老保险</span>
+                        <span id="pensionValue">8%</span>
+                    </div>
+                    <input type="range" id="pensionRate" class="slider" min="0" max="20" step="0.5" value="8">
+                </div>
+
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>医疗保险</span>
+                        <span id="medicalValue">2%</span>
+                    </div>
+                    <input type="range" id="medicalRate" class="slider" min="0" max="10" step="0.5" value="2">
+                </div>
+
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>失业保险</span>
+                        <span id="unemploymentValue">0.5%</span>
+                    </div>
+                    <input type="range" id="unemploymentRate" class="slider" min="0" max="5" step="0.5" value="0.5">
+                </div>
+
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>住房公积金</span>
+                        <span id="housingValue">12%</span>
+                    </div>
+                    <input type="range" id="housingRate" class="slider" min="5" max="12" step="1" value="12">
+                </div>
+
+                <div class="divider">
+                    <span>其他扣除</span>
+                </div>
+
+                <div class="input-group">
+                    <label for="specialDeduction">专项附加扣除（元/月）</label>
+                    <input type="number" id="specialDeduction" class="input-field" placeholder="子女教育、房贷等" value="0" min="0">
+                </div>
+
+                <div class="input-group">
+                    <label for="threshold">个税起征点（元）</label>
+                    <input type="number" id="threshold" class="input-field" value="5000" min="0">
+                </div>
+            </form>
+
+            <div class="result-section">
+                <div class="result-main">
+                    <div class="result-item primary">
+                        <span class="result-label">应缴个税</span>
+                        <span class="result-value" id="taxAmount">¥0.00</span>
+                    </div>
+                    <div class="result-item highlight">
+                        <span class="result-label">税后工资</span>
+                        <span class="result-value" id="afterTaxSalary">¥0.00</span>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <button class="detail-toggle" id="detailToggle">
+                        <span>查看详细明细</span>
+                        <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="detail-content" id="detailContent">
+                        <div class="detail-row">
+                            <span>税前工资</span>
+                            <span id="detailSalary">¥0.00</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>五险一金总额</span>
+                            <span id="detailInsurance">¥0.00</span>
+                        </div>
+                        <div class="detail-row sub">
+                            <span>・缴费基数</span>
+                            <span id="detailInsuranceBase">¥0.00</span>
+                        </div>
+                        <div class="detail-row sub">
+                            <span>・养老保险</span>
+                            <span id="detailPension">¥0.00</span>
+                        </div>
+                        <div class="detail-row sub">
+                            <span>・医疗保险</span>
+                            <span id="detailMedical">¥0.00</span>
+                        </div>
+                        <div class="detail-row sub">
+                            <span>・失业保险</span>
+                            <span id="detailUnemployment">¥0.00</span>
+                        </div>
+                        <div class="detail-row sub">
+                            <span>・住房公积金</span>
+                            <span id="detailHousing">¥0.00</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>专项附加扣除</span>
+                            <span id="detailSpecial">¥0.00</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>起征点</span>
+                            <span id="detailThreshold">¥0.00</span>
+                        </div>
+                        <div class="detail-row total">
+                            <span>应纳税所得额</span>
+                            <span id="detailTaxable">¥0.00</span>
+                        </div>
+                        <div class="detail-row tax">
+                            <span>适用税率</span>
+                            <span id="detailRate">0%</span>
+                        </div>
+                        <div class="detail-row tax">
+                            <span>速算扣除数</span>
+                            <span id="detailQuickDeduction">¥0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tax-table-section">
+                    <button class="detail-toggle" id="taxTableToggle">
+                        <span>个税税率表</span>
+                        <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="tax-table-content" id="taxTableContent">
+                        <table class="tax-table">
+                            <thead>
+                                <tr>
+                                    <th>级数</th>
+                                    <th>应纳税所得额</th>
+                                    <th>税率</th>
+                                    <th>速算扣除数</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>不超过3000元</td>
+                                    <td>3%</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>超过3000元至12000元</td>
+                                    <td>10%</td>
+                                    <td>210</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>超过12000元至25000元</td>
+                                    <td>20%</td>
+                                    <td>1410</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>超过25000元至35000元</td>
+                                    <td>25%</td>
+                                    <td>2660</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>超过35000元至55000元</td>
+                                    <td>30%</td>
+                                    <td>4410</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>超过55000元至80000元</td>
+                                    <td>35%</td>
+                                    <td>7160</td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>超过80000元</td>
+                                    <td>45%</td>
+                                    <td>15160</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

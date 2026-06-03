@@ -1,0 +1,86 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+}
+
+.header {
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  padding: $spacing-xl $page-padding;
+  padding-bottom: 100rpx;
+}
+
+.userCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-xl $spacing-lg;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  margin: -60rpx $page-padding 0;
+  box-shadow: $shadow-card;
+}
+
+.nickname {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  margin-top: $spacing-md;
+}
+
+.bio {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+  text-align: center;
+  margin-top: $spacing-sm;
+  line-height: $line-height-loose;
+}
+
+.meta {
+  display: flex;
+  width: 100%;
+  margin-top: $spacing-lg;
+  padding-top: $spacing-lg;
+  border-top: 1rpx solid $color-divider;
+}
+
+.metaItem {
+  flex: 1;
+  text-align: center;
+
+  .label {
+    font-size: $font-size-sm;
+    color: $color-text-tertiary;
+  }
+
+  .value {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-top: $spacing-xs;
+  }
+}
+
+.section {
+  margin: $spacing-lg $page-padding 0;
+
+  .sectionTitle {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-md;
+  }
+}
+
+.messages {
+  .empty {
+    text-align: center;
+    padding: $spacing-xl * 2;
+    background: $color-bg-card;
+    border-radius: $radius-lg;
+    color: $color-text-tertiary;
+    font-size: $font-size-md;
+    box-shadow: $shadow-card;
+  }
+}

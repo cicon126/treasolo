@@ -1,0 +1,144 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding: $spacing-lg $page-padding;
+}
+
+.avatarSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-xl 0;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  margin-bottom: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.avatarLabel {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-md;
+}
+
+.avatarWrapper {
+  position: relative;
+}
+
+.changeIcon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: $radius-round;
+  background: $color-primary;
+  color: $color-text-white;
+  font-size: $font-size-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4rpx solid $color-bg-card;
+}
+
+.form {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.formItem {
+  margin-bottom: $spacing-lg;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.label {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-sm;
+}
+
+.input {
+  width: 100%;
+  height: 88rpx;
+  padding: 0 $spacing-md;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  box-sizing: border-box;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 200rpx;
+  padding: $spacing-md;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  box-sizing: border-box;
+  line-height: $line-height-loose;
+}
+
+.saveBtn {
+  @include button-reset;
+  height: $button-height-lg;
+  margin-top: $spacing-xl;
+  border-radius: $radius-button;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  color: $color-text-white;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  width: 100%;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    background: $color-text-disabled;
+  }
+}
+
+.avatarOptions {
+  margin-top: $spacing-lg;
+
+  .optionsTitle {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    margin-bottom: $spacing-md;
+  }
+
+  .optionsGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+  }
+
+  .optionItem {
+    width: 120rpx;
+    height: 120rpx;
+    border-radius: $radius-round;
+    overflow: hidden;
+    border: 4rpx solid transparent;
+    transition: all $transition-base;
+
+    &.selected {
+      border-color: $color-primary;
+    }
+
+    .optionImage {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

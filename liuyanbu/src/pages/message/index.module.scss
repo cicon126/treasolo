@@ -1,0 +1,33 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding: $spacing-lg $page-padding;
+  padding-bottom: 120rpx;
+}
+
+.header {
+  margin-bottom: $spacing-lg;
+
+  .title {
+    font-size: $font-size-xxl;
+    font-weight: $font-weight-bold;
+    color: $color-text-primary;
+  }
+
+  .subtitle {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    margin-top: $spacing-xs;
+  }
+}
+
+.messageList {
+  .empty {
+    text-align: center;
+    padding: $spacing-xl * 2;
+    color: $color-text-tertiary;
+    font-size: $font-size-md;
+  }
+}
