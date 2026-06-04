@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text } from '@tarojs/components';
-import classnames from 'classnames';
 import styles from './index.module.scss';
 
 interface AdviceCardProps {

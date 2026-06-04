@@ -4,7 +4,6 @@ import Taro from '@tarojs/taro';
 import classnames from 'classnames';
 import { useHealthStore } from '@/store/useHealthStore';
 import { getToday, getNow, getRelativeDateLabel } from '@/utils/dateUtils';
-import { METRIC_CONFIGS } from '@/types/health';
 import type { MetricType, HealthRecord } from '@/types/health';
 import styles from './index.module.scss';
 

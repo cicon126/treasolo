@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { View, Text } from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import classnames from 'classnames';
 import { useHealthStore } from '@/store/useHealthStore';
 import { calcHealthScore, generateAdvices, getBMIStatus, getBPStatus, getBloodSugarStatus, getHeartRateStatus, getScoreColor, getScoreLabel, calcBMI } from '@/utils/healthCalculator';
 import { getToday, getRelativeDateLabel } from '@/utils/dateUtils';
