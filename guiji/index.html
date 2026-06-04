@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>车辆行驶轨迹模拟器</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://webapi.amap.com/maps?v=2.0&key=6cba1d027f60c63c8a4b49f57c50e97f"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🚗 车辆行驶轨迹模拟器</h1>
+        </header>
+        
+        <div class="main-content">
+            <aside class="control-panel">
+                <div class="panel-section">
+                    <h3>车辆设置</h3>
+                    <div class="form-group">
+                        <label>车辆类型</label>
+                        <select id="vehicleType">
+                            <option value="car">🚗 小轿车</option>
+                            <option value="truck">🚚 货车</option>
+                            <option value="bus">🚌 大巴车</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>车辆颜色</label>
+                        <div class="color-picker">
+                            <div class="color-option active" data-color="#e74c3c" style="background: #e74c3c;"></div>
+                            <div class="color-option" data-color="#3498db" style="background: #3498db;"></div>
+                            <div class="color-option" data-color="#2ecc71" style="background: #2ecc71;"></div>
+                            <div class="color-option" data-color="#f39c12" style="background: #f39c12;"></div>
+                            <div class="color-option" data-color="#9b59b6" style="background: #9b59b6;"></div>
+                            <div class="color-option" data-color="#1abc9c" style="background: #1abc9c;"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>行驶速度 (km/h)</label>
+                        <input type="range" id="speedSlider" min="20" max="120" value="60">
+                        <span id="speedValue">60 km/h</span>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>行驶控制</h3>
+                    <div class="control-buttons">
+                        <button id="startBtn" class="btn btn-primary">▶ 开始</button>
+                        <button id="pauseBtn" class="btn btn-warning" disabled>⏸ 暂停</button>
+                        <button id="stopBtn" class="btn btn-danger" disabled>⏹ 停止</button>
+                        <button id="resetBtn" class="btn btn-secondary">🔄 重置</button>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>实时状态</h3>
+                    <div class="status-display">
+                        <div class="status-item">
+                            <span class="status-label">当前速度</span>
+                            <span class="status-value" id="currentSpeed">0 km/h</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">行驶距离</span>
+                            <span class="status-value" id="distance">0.00 km</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">行驶时间</span>
+                            <span class="status-value" id="travelTime">00:00:00</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">当前状态</span>
+                            <span class="status-value status-stopped" id="status">已停止</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3>当前位置</h3>
+                    <div class="location-display">
+                        <div class="location-item">
+                            <span class="location-label">经度</span>
+                            <span class="location-value" id="longitude">--</span>
+                        </div>
+                        <div class="location-item">
+                            <span class="location-label">纬度</span>
+                            <span class="location-value" id="latitude">--</span>
+                        </div>
+                        <div class="location-item">
+                            <span class="location-label">地址</span>
+                            <span class="location-value" id="address">点击车辆图标查看位置</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

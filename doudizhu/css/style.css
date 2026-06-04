@@ -1,0 +1,528 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(135deg, #1a5c3e 0%, #2d7a4f 50%, #1a5c3e 100%);
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+#game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(ellipse at center, #2d8a5a 0%, #1a5c3e 70%);
+}
+
+#game-title {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 28px;
+    font-weight: bold;
+    color: #ffd700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+}
+
+.player {
+    position: absolute;
+    padding: 10px;
+}
+
+.player-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.player-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.player-role {
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    background: #666;
+    color: white;
+}
+
+.player-role.dizhu {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+}
+
+.player-role.nongmin {
+    background: linear-gradient(135deg, #4ecdc4, #44a08d);
+}
+
+.player-cards-count {
+    color: #ffd700;
+    font-size: 14px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+#left-player {
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#right-player {
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#bottom-player {
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+#bottom-player .player-info {
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.opponent-cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 80px;
+    justify-content: center;
+}
+
+.card {
+    width: 70px;
+    height: 100px;
+    border-radius: 8px;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    position: relative;
+}
+
+.card.back {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: 2px solid #5a67d8;
+}
+
+.card.back::after {
+    content: '🎴';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+}
+
+.card.selected {
+    transform: translateY(-20px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    border: 3px solid #ffd700;
+}
+
+.card.hint {
+    animation: hint-pulse 0.5s ease infinite alternate;
+}
+
+@keyframes hint-pulse {
+    from { box-shadow: 0 0 5px #ffd700; }
+    to { box-shadow: 0 0 20px #ffd700, 0 0 30px #ffd700; }
+}
+
+.card-value {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.card-suit {
+    font-size: 24px;
+    text-align: center;
+}
+
+.card.red {
+    color: #e53e3e;
+}
+
+.card.black {
+    color: #1a202c;
+}
+
+.card .top-left {
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card .bottom-right {
+    align-self: flex-end;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: rotate(180deg);
+}
+
+.human-cards {
+    display: flex;
+    justify-content: center;
+    gap: -30px;
+    min-height: 120px;
+}
+
+.human-cards .card {
+    margin-left: -25px;
+}
+
+.human-cards .card:first-child {
+    margin-left: 0;
+}
+
+#center-area {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+#dizhu-cards {
+    text-align: center;
+}
+
+.dizhu-label {
+    color: #ffd700;
+    font-size: 14px;
+    margin-bottom: 5px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+#dizhu-cards-container {
+    display: flex;
+    gap: 5px;
+}
+
+#dizhu-cards-container .card {
+    width: 50px;
+    height: 70px;
+}
+
+#dizhu-cards-container .card .card-value {
+    font-size: 14px;
+}
+
+#dizhu-cards-container .card .card-suit {
+    font-size: 18px;
+}
+
+#play-area {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    min-height: 120px;
+}
+
+.played-cards {
+    display: flex;
+    gap: 5px;
+    min-height: 100px;
+    align-items: center;
+}
+
+.played-cards .card {
+    width: 55px;
+    height: 80px;
+}
+
+.played-cards .card .card-value {
+    font-size: 16px;
+}
+
+.played-cards .card .card-suit {
+    font-size: 20px;
+}
+
+#game-status {
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+#status-text {
+    margin-bottom: 5px;
+}
+
+#current-turn {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffd700;
+}
+
+#control-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+    color: white;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+    color: white;
+}
+
+.btn-info {
+    background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+    color: white;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+    color: white;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    animation: modal-in 0.3s ease;
+}
+
+@keyframes modal-in {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-content h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #2d3748;
+}
+
+.modal-content p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    color: #4a5568;
+}
+
+.modal-content.win h2 {
+    color: #48bb78;
+}
+
+.modal-content.lose h2 {
+    color: #e53e3e;
+}
+
+.opponent-cards .card {
+    width: 45px;
+    height: 65px;
+    margin-left: -30px;
+}
+
+.opponent-cards .card:first-child {
+    margin-left: 0;
+}
+
+.player-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #ffd700;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    position: relative;
+}
+
+.player-avatar.editable {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.player-avatar.editable:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.player-avatar.editable:hover .avatar-edit-hint {
+    opacity: 1;
+}
+
+.avatar-edit-hint {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+}
+
+#left-player .player-avatar {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+#right-player .player-avatar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+#bottom-player .player-avatar {
+    margin: 0 auto 8px auto;
+}
+
+.avatar-modal-content {
+    max-width: 500px;
+}
+
+.avatar-options {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.avatar-option {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 3px solid transparent;
+}
+
+.avatar-option:hover {
+    transform: scale(1.15);
+    border-color: #ffd700;
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.5);
+}
+
+.custom-upload {
+    margin: 20px 0;
+}
+
+#left-player .player-info {
+    margin-top: 70px;
+}
+
+#right-player .player-info {
+    margin-top: 70px;
+    justify-content: flex-end;
+}
+
+#left-player .player-cards-count {
+    text-align: left;
+}
+
+#right-player .player-cards-count {
+    text-align: right;
+}

@@ -1,0 +1,187 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding: 0 $page-padding;
+  padding-bottom: 40rpx;
+}
+
+.greeting {
+  padding-top: $spacing-lg;
+  margin-bottom: $spacing-lg;
+}
+
+.greetingText {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+}
+
+.greetingSub {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  margin-top: $spacing-xs;
+}
+
+.scoreSection {
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  border-radius: $radius-xl;
+  padding: $spacing-xl;
+  margin-bottom: $spacing-lg;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 8rpx 24rpx rgba(45, 182, 125, 0.3);
+}
+
+.scoreCircle {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: $radius-round;
+  background: rgba(255, 255, 255, 0.2);
+  @include flex-center;
+  flex-direction: column;
+  margin-right: $spacing-xl;
+  flex-shrink: 0;
+}
+
+.scoreNumber {
+  font-size: 56rpx;
+  font-weight: $font-weight-bold;
+  color: $color-text-white;
+  line-height: 1;
+}
+
+.scoreLabel {
+  font-size: $font-size-xs;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: $spacing-xs;
+}
+
+.scoreInfo {
+  flex: 1;
+}
+
+.scoreTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-white;
+  margin-bottom: $spacing-sm;
+}
+
+.scoreDesc {
+  font-size: $font-size-sm;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: $line-height-loose;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+}
+
+.metricsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+  margin-bottom: $spacing-xl;
+}
+
+.metricCard {
+  width: calc(50% - #{$spacing-md} / 2);
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+}
+
+.metricHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: $spacing-md;
+}
+
+.metricIcon {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: $radius-md;
+  @include flex-center;
+  font-size: 28rpx;
+  margin-right: $spacing-sm;
+}
+
+.metricLabel {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  font-weight: $font-weight-medium;
+}
+
+.metricValue {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  line-height: $line-height-tight;
+}
+
+.metricUnit {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-left: $spacing-xs;
+}
+
+.metricStatus {
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx 16rpx;
+  border-radius: $radius-round;
+  margin-top: $spacing-sm;
+}
+
+.metricStatusText {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+}
+
+.noData {
+  font-size: $font-size-sm;
+  color: $color-text-disabled;
+  margin-top: $spacing-xs;
+}
+
+.adviceSection {
+  margin-bottom: $spacing-xl;
+}
+
+.adviceList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.recordBtn {
+  width: 100%;
+  height: $button-height-lg;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  border-radius: $radius-button;
+  @include flex-center;
+  margin-top: $spacing-lg;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+}
+
+.recordBtnText {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-white;
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三人斗地主</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="game-title">🎴 三人斗地主</div>
+        
+        <div id="left-player" class="player ai-player">
+            <div class="player-avatar" data-player="1">
+                <img src="" alt="电脑1" class="avatar-img">
+            </div>
+            <div class="player-info">
+                <span class="player-name">电脑1</span>
+                <span class="player-role"></span>
+            </div>
+            <div class="player-cards-count">剩余: <span id="left-count">17</span> 张</div>
+            <div id="left-cards" class="opponent-cards"></div>
+        </div>
+        
+        <div id="right-player" class="player ai-player">
+            <div class="player-avatar" data-player="2">
+                <img src="" alt="电脑2" class="avatar-img">
+            </div>
+            <div class="player-info">
+                <span class="player-name">电脑2</span>
+                <span class="player-role"></span>
+            </div>
+            <div class="player-cards-count">剩余: <span id="right-count">17</span> 张</div>
+            <div id="right-cards" class="opponent-cards"></div>
+        </div>
+        
+        <div id="center-area">
+            <div id="dizhu-cards">
+                <div class="dizhu-label">地主牌</div>
+                <div id="dizhu-cards-container"></div>
+            </div>
+            
+            <div id="play-area">
+                <div id="left-played" class="played-cards"></div>
+                <div id="right-played" class="played-cards"></div>
+                <div id="bottom-played" class="played-cards"></div>
+            </div>
+            
+            <div id="game-status">
+                <div id="status-text">点击"开始游戏"开始</div>
+                <div id="current-turn"></div>
+            </div>
+            
+            <div id="control-buttons">
+                <button id="start-btn" class="btn btn-primary">开始游戏</button>
+                <button id="call-dizhu-btn" class="btn btn-success">叫地主</button>
+                <button id="no-call-btn" class="btn btn-warning">不叫</button>
+                <button id="play-btn" class="btn btn-primary">出牌</button>
+                <button id="pass-btn" class="btn btn-warning">不出</button>
+                <button id="hint-btn" class="btn btn-info">提示</button>
+                <button id="restart-btn" class="btn btn-danger">重新开始</button>
+            </div>
+        </div>
+        
+        <div id="bottom-player" class="player human-player">
+            <div class="player-avatar editable" data-player="0">
+                <img src="" alt="我" class="avatar-img">
+                <div class="avatar-edit-hint">点击更换头像</div>
+            </div>
+            <div class="player-info">
+                <span class="player-name">我</span>
+                <span class="player-role"></span>
+            </div>
+            <div id="bottom-cards" class="human-cards"></div>
+        </div>
+    </div>
+    
+    <div id="avatar-modal" class="modal">
+        <div class="modal-content avatar-modal-content">
+            <h2>选择头像</h2>
+            <div class="avatar-options">
+                <div class="avatar-option" data-avatar="boy">👦</div>
+                <div class="avatar-option" data-avatar="girl">👧</div>
+                <div class="avatar-option" data-avatar="man">👨</div>
+                <div class="avatar-option" data-avatar="woman">👩</div>
+                <div class="avatar-option" data-avatar="cat">🐱</div>
+                <div class="avatar-option" data-avatar="dog">🐶</div>
+                <div class="avatar-option" data-avatar="panda">🐼</div>
+                <div class="avatar-option" data-avatar="fox">🦊</div>
+                <div class="avatar-option" data-avatar="lion">🦁</div>
+                <div class="avatar-option" data-avatar="tiger">🐯</div>
+                <div class="avatar-option" data-avatar="bear">🐻</div>
+                <div class="avatar-option" data-avatar="pig">🐷</div>
+            </div>
+            <div class="custom-upload">
+                <label for="avatar-upload" class="btn btn-info">上传自定义头像</label>
+                <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
+            </div>
+            <button id="close-avatar-modal" class="btn btn-warning">关闭</button>
+        </div>
+    </div>
+    
+    <div id="win-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="win-title"></h2>
+            <p id="win-message"></p>
+            <button id="play-again-btn" class="btn btn-primary">再来一局</button>
+        </div>
+    </div>
+
+    <script src="js/card.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/ai.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/speech.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

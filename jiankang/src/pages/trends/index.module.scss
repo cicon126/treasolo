@@ -1,0 +1,249 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding: 0 $page-padding;
+  padding-bottom: 40rpx;
+}
+
+.periodTabs {
+  display: flex;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-xs;
+  margin-top: $spacing-lg;
+  margin-bottom: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.periodTab {
+  flex: 1;
+  height: 60rpx;
+  @include flex-center;
+  border-radius: $radius-md;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+.periodTabActive {
+  background: $color-primary;
+}
+
+.periodTabText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  font-weight: $font-weight-medium;
+}
+
+.periodTabTextActive {
+  color: $color-text-white;
+}
+
+.metricTabs {
+  display: flex;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+  overflow-x: auto;
+}
+
+.metricTab {
+  display: inline-flex;
+  align-items: center;
+  padding: $spacing-sm $spacing-lg;
+  border-radius: $radius-round;
+  background: $color-bg-card;
+  box-shadow: $shadow-card;
+  transition: all $transition-base;
+  flex-shrink: 0;
+
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+.metricTabActive {
+  background: $color-primary;
+}
+
+.metricTabText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  font-weight: $font-weight-medium;
+  white-space: nowrap;
+}
+
+.metricTabTextActive {
+  color: $color-text-white;
+}
+
+.chartCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.chartTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-lg;
+}
+
+.chartArea {
+  height: 400rpx;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 60rpx;
+  border-left: 2rpx solid $color-border;
+  border-bottom: 2rpx solid $color-border;
+}
+
+.chartYAxis {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 60rpx;
+  width: 80rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-right: $spacing-sm;
+}
+
+.yLabel {
+  font-size: 20rpx;
+  color: $color-text-tertiary;
+  text-align: right;
+}
+
+.chartBars {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  height: 340rpx;
+  margin-left: 80rpx;
+  gap: 4rpx;
+}
+
+.barWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.bar {
+  width: 100%;
+  max-width: 48rpx;
+  min-height: 8rpx;
+  border-radius: 8rpx 8rpx 0 0;
+  transition: height $transition-base;
+}
+
+.barLabel {
+  font-size: 18rpx;
+  color: $color-text-tertiary;
+  margin-top: $spacing-xs;
+  white-space: nowrap;
+}
+
+.lineChart {
+  position: relative;
+  height: 340rpx;
+  margin-left: 80rpx;
+}
+
+.lineChartSvg {
+  width: 100%;
+  height: 100%;
+}
+
+.summaryCards {
+  display: flex;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+}
+
+.summaryCard {
+  flex: 1;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  text-align: center;
+}
+
+.summaryLabel {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-bottom: $spacing-xs;
+}
+
+.summaryValue {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+}
+
+.summaryUnit {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.detailSection {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-lg;
+}
+
+.detailTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-md 0;
+  border-bottom: 1rpx solid $color-divider;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.detailLabel {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+}
+
+.detailValue {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.trendUp {
+  color: $color-health-high;
+}
+
+.trendDown {
+  color: $color-health-low;
+}
+
+.trendStable {
+  color: $color-health-normal;
+}

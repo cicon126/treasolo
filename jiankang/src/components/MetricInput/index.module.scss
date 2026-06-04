@@ -1,0 +1,47 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: $spacing-md;
+}
+
+.label {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.unit {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  margin-left: $spacing-xs;
+}
+
+.inputWrap {
+  border: 2rpx solid $color-border;
+  border-radius: $radius-md;
+  padding: 0 $spacing-md;
+  height: $button-height-md;
+  display: flex;
+  align-items: center;
+  transition: border-color $transition-base;
+
+  &:focus-within {
+    border-color: $color-primary;
+  }
+}
+
+.input {
+  flex: 1;
+  font-size: $font-size-lg;
+  color: $color-text-primary;
+  height: 100%;
+}
