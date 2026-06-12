@@ -88,6 +88,8 @@ body {
   aspect-ratio: 1;
   cursor: pointer;
   user-select: none;
+  overflow: hidden;
+  border-radius: 50% 50% 20% 20% / 30% 30% 10% 10%;
 }
 
 .hole-mouth {
@@ -149,6 +151,8 @@ body {
   box-shadow: 0 6px 0 #3d7d34, 0 10px 20px rgba(0, 0, 0, 0.15);
   transition: all 0.1s ease;
   font-family: inherit;
+  position: relative;
+  z-index: 5;
 }
 
 .start-btn:hover {
