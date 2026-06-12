@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>打地鼠</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="game-container">
+    <h1 class="game-title">🔨 打地鼠</h1>
+
+    <div class="status-bar">
+      <div class="status-item time">
+        <span class="status-label">⏱ 时间</span>
+        <span id="time" class="status-value">30</span>
+      </div>
+      <div class="status-item score">
+        <span class="status-label">🏆 分数</span>
+        <span id="score" class="status-value">0</span>
+      </div>
+    </div>
+
+    <div class="holes-grid">
+      <div class="hole" data-index="0">
+        <div class="hole-mouth"></div>
+        <div class="mole">🐹</div>
+      </div>
+      <div class="hole" data-index="1">
+        <div class="hole-mouth"></div>
+        <div class="mole">🐹</div>
+      </div>
+      <div class="hole" data-index="2">
+        <div class="hole-mouth"></div>
+        <div class="mole">🐹</div>
+      </div>
+      <div class="hole" data-index="3">
+        <div class="hole-mouth"></div>
+        <div class="mole">🐹</div>
+      </div>
+      <div class="hole" data-index="4">
+        <div class="hole-mouth"></div>
+        <div class="mole">🐹</div>
+      </div>
+      <div class="hole" data-index="5">
+        <div class="hole-mouth"></div>
+        <div class="mole">🐹</div>
+      </div>
+      <div class="hole" data-index="6">
+        <div class="hole-mouth"></div>
+        <div class="mole">🐹</div>
+      </div>
+      <div class="hole" data-index="7">
+        <div class="hole-mouth"></div>
+        <div class="mole">🐹</div>
+      </div>
+      <div class="hole" data-index="8">
+        <div class="hole-mouth"></div>
+        <div class="mole">🐹</div>
+      </div>
+    </div>
+
+    <button id="start-btn" class="start-btn">🎮 开始游戏</button>
+
+    <div id="game-over" class="game-over hidden">
+      <div class="game-over-card">
+        <h2>🎉 游戏结束！</h2>
+        <p>你的得分：<span id="final-score">0</span> 分</p>
+        <button id="restart-btn" class="start-btn">🔄 再来一局</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
