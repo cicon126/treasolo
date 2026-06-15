@@ -50,14 +50,14 @@ export default {
           '50%': { transform: 'translateY(-8px)' },
         },
         'shake': {
-          '0%, 100%': { transform: 'translateX(0) rotateY(180deg)' },
-          '25%': { transform: 'translateX(-5px) rotateY(180deg)' },
-          '75%': { transform: 'translateX(5px) rotateY(180deg)' },
+          '0%, 100%': { transform: 'translateX(0) rotateY(180deg)', WebkitTransform: 'translateX(0) rotateY(180deg)' },
+          '25%': { transform: 'translateX(-5px) rotateY(180deg)', WebkitTransform: 'translateX(-5px) rotateY(180deg)' },
+          '75%': { transform: 'translateX(5px) rotateY(180deg)', WebkitTransform: 'translateX(5px) rotateY(180deg)' },
         },
         'pop': {
-          '0%': { transform: 'rotateY(180deg) scale(1)' },
-          '50%': { transform: 'rotateY(180deg) scale(1.1)' },
-          '100%': { transform: 'rotateY(180deg) scale(1)' },
+          '0%': { transform: 'rotateY(180deg) scale(1)', WebkitTransform: 'rotateY(180deg) scale(1)' },
+          '50%': { transform: 'rotateY(180deg) scale(1.1)', WebkitTransform: 'rotateY(180deg) scale(1.1)' },
+          '100%': { transform: 'rotateY(180deg) scale(1)', WebkitTransform: 'rotateY(180deg) scale(1)' },
         },
         'confetti': {
           '0%': { transform: 'translateY(0) rotate(0deg)', opacity: '1' },
