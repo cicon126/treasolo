@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>打砖块游戏</title>
+    <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+    <div id="app">
+        <h1>打砖块</h1>
+        <div class="game-info">
+            <div class="info-item">
+                <span class="label">分数:</span>
+                <span id="score">0</span>
+            </div>
+            <div class="info-item">
+                <span class="label">关卡:</span>
+                <span id="level">1</span>
+            </div>
+            <div class="info-item">
+                <span class="label">生命:</span>
+                <span id="lives">3</span>
+            </div>
+        </div>
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        <div id="gameOverlay" class="overlay hidden">
+            <div class="overlay-content">
+                <h2 id="overlayTitle">游戏结束</h2>
+                <p id="overlayMessage">点击下方按钮重新开始</p>
+                <button id="restartBtn">重新开始</button>
+            </div>
+        </div>
+        <div class="controls">
+            <p>← → 键或鼠标移动挡板 | 空格键发射/暂停</p>
+            <div class="powerups-info">
+                <span class="powerup-icon extend"></span>
+                <span>加长板</span>
+                <span class="powerup-icon multi"></span>
+                <span>多球</span>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="/main.js"></script>
+</body>
+</html>
