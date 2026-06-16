@@ -432,6 +432,7 @@
         }
 
         function showGameOver() {
+            if (document.querySelector('.game-over-overlay')) return;
             const overlay = document.createElement('div');
             overlay.className = 'game-over-overlay';
             
