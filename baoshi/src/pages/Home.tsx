@@ -1,8 +1,10 @@
 import { useGameLogic } from '@/hooks/useGameLogic';
+import { useWindowSize } from '@/hooks/useWindowSize';
 import GameBoard from '@/components/GameBoard';
 import ScorePanel from '@/components/ScorePanel';
 import GameControls from '@/components/GameControls';
 import { Sparkles } from 'lucide-react';
+import { BOARD_SIZE } from '@/types/game';
 
 export default function Home() {
   const {
@@ -16,9 +18,14 @@ export default function Home() {
     resetGame,
   } = useGameLogic();
 
+  const { width, height } = useWindowSize();
+  
+  const maxBoardSize = Math.min(width - 400, height - 200);
+  const cellSize = Math.max(40, Math.floor(maxBoardSize / BOARD_SIZE));
+
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center p-8"
+      className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8"
       style={{
         background: 'linear-gradient(135deg, #0c0c1e 0%, #1a1a3e 50%, #16213e 100%)',
       }}
@@ -41,10 +48,10 @@ export default function Home() {
         ))}
       </div>
 
-      <div className="relative z-10">
-        <div className="text-center mb-8">
+      <div className="relative z-10 flex flex-col items-center">
+        <div className="text-center mb-6">
           <h1
-            className="text-5xl font-bold mb-2 flex items-center justify-center gap-3"
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-2 flex items-center justify-center gap-3"
             style={{
               background: 'linear-gradient(135deg, #ffe66d, #ff6b6b, #a29bfe, #4ecdc4)',
               WebkitBackgroundClip: 'text',
@@ -52,17 +59,17 @@ export default function Home() {
               backgroundClip: 'text',
             }}
           >
-            <Sparkles className="w-10 h-10 text-yellow-400" />
+            <Sparkles className="w-8 h-8 sm:w-10 sm:h-10 text-yellow-400" />
             宝石迷阵
-            <Sparkles className="w-10 h-10 text-yellow-400" />
+            <Sparkles className="w-8 h-8 sm:w-10 sm:h-10 text-yellow-400" />
           </h1>
-          <p className="text-white/50 text-lg">
+          <p className="text-white/50 text-sm sm:text-base lg:text-lg">
             {isAnimating ? '消除中...' : '交换相邻宝石，三连消除得分！'}
           </p>
         </div>
 
-        <div className="flex gap-8 items-start">
-          <div className="w-48">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-center lg:items-start">
+          <div className="w-full lg:w-auto min-w-[160px] max-w-[200px]">
             <ScorePanel
               score={score}
               matchedCount={matchedCount}
@@ -74,10 +81,10 @@ export default function Home() {
             board={board}
             selectedGem={selectedGem}
             onGemClick={handleGemClick}
-            cellSize={60}
+            cellSize={cellSize}
           />
 
-          <div className="w-48">
+          <div className="w-full lg:w-auto min-w-[160px] max-w-[200px]">
             <GameControls onReset={resetGame} />
           </div>
         </div>
