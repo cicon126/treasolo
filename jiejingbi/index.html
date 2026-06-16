@@ -57,4 +57,512 @@
             margin-bottom: 15px;
             padding: 10px 20px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius:
+            border-radius: 10px;
+        }
+
+        .score, .lives {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .score-text, .lives-text {
+            color: #fff;
+            font-size: clamp(14px, 2vw, 18px);
+            font-weight: bold;
+        }
+
+        .score-value {
+            color: #ffd700;
+            font-size: clamp(20px, 4vw, 28px);
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .heart {
+            color: #e74c3c;
+            font-size: clamp(18px, 3vw, 24px);
+        }
+
+        .controls {
+            text-align: center;
+            margin-top: 15px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: clamp(12px, 2vw, 14px);
+        }
+
+        .game-over-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 20px;
+            z-index: 10;
+        }
+
+        .game-over-title {
+            color: #e74c3c;
+            font-size: clamp(32px, 8vw, 48px);
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(231, 76, 60, 0.7);
+            animation: pulse 0.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
+        }
+
+        .final-score {
+            color: #ffd700;
+            font-size: clamp(20px, 5vw, 32px);
+            margin-bottom: 30px;
+        }
+
+        .restart-btn {
+            padding: clamp(12px, 3vw, 15px) clamp(30px, 8vw, 50px);
+            font-size: clamp(16px, 3vw, 20px);
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.6);
+        }
+
+        .restart-btn:active {
+            transform: translateY(0);
+        }
+
+        .start-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 20px;
+            z-index: 10;
+        }
+
+        .start-title {
+            color: #ffd700;
+            font-size: clamp(36px, 10vw, 56px);
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.7);
+        }
+
+        .start-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: clamp(14px, 3vw, 20px);
+            margin-bottom: 40px;
+        }
+
+        .start-btn {
+            padding: clamp(15px, 4vw, 20px) clamp(40px, 10vw, 60px);
+            font-size: clamp(18px, 4vw, 24px);
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(245, 87, 108, 0.4);
+        }
+
+        .start-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.6);
+        }
+
+        .instructions {
+            margin-top: 30px;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            font-size: clamp(12px, 2.5vw, 16px);
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-info">
+            <div class="score">
+                <span class="score-text">💰 分数:</span>
+                <span class="score-value" id="score">0</span>
+            </div>
+            <div class="lives">
+                <span class="lives-text">❤️ 生命:</span>
+                <div id="lives">
+                    <span class="heart">❤️</span>
+                    <span class="heart">❤️</span>
+                    <span class="heart">❤️</span>
+                </div>
+            </div>
+        </div>
+
+        <canvas id="gameCanvas"></canvas>
+
+        <div class="controls">
+            使用 ← → 方向键 或 A D 键 移动篮子
+        </div>
+
+        <div class="start-screen" id="startScreen">
+            <h1 class="start-title">🎯 接金币</h1>
+            <p class="start-subtitle">接住金币，避开炸弹！</p>
+            <button class="start-btn" id="startBtn">开始游戏</button>
+            <div class="instructions">
+                <p>⬅️ ➡️ 移动篮子</p>
+                <p>💰 金币 +10分</p>
+                <p>💣 炸弹 -1生命</p>
+            </div>
+        </div>
+
+        <div class="game-over-overlay" id="gameOverOverlay" style="display: none;">
+            <h2 class="game-over-title">游戏结束</h2>
+            <p class="final-score">最终得分: <span id="finalScore">0</span></p>
+            <button class="restart-btn" id="restartBtn">再来一局</button>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreElement = document.getElementById('score');
+        const livesElement = document.getElementById('lives');
+        const startScreen = document.getElementById('startScreen');
+        const gameOverOverlay = document.getElementById('gameOverOverlay');
+        const finalScoreElement = document.getElementById('finalScore');
+        const startBtn = document.getElementById('startBtn');
+        const restartBtn = document.getElementById('restartBtn');
+
+        const ASPECT_RATIO = 600 / 500;
+        const BASE_BASKET_WIDTH = 100;
+        const BASE_BASKET_HEIGHT = 30;
+        const BASE_COIN_SIZE = 30;
+        const BASE_BOMB_SIZE = 35;
+        const BASE_BASKET_SPEED = 12;
+        const BASE_OBJECT_SPEED = 4;
+        const BASE_SPAWN_INTERVAL = 1000;
+
+        let canvasWidth = 600;
+        let canvasHeight = 500;
+        let scale = 1;
+
+        let basket = {
+            x: 0,
+            y: 0,
+            width: BASE_BASKET_WIDTH,
+            height: BASE_BASKET_HEIGHT
+        };
+
+        let coins = [];
+        let bombs = [];
+        let score = 0;
+        let lives = 3;
+        let gameRunning = false;
+        let keys = {};
+        let spawnTimer = 0;
+        let animationId = null;
+
+        function resizeCanvas() {
+            const container = canvas.parentElement;
+            const containerWidth = container.clientWidth - 40;
+            const containerHeight = container.clientHeight - 80;
+
+            let newWidth, newHeight;
+            
+            if (containerWidth / containerHeight > ASPECT_RATIO) {
+                newHeight = containerHeight;
+                newWidth = newHeight * ASPECT_RATIO;
+            } else {
+                newWidth = containerWidth;
+                newHeight = newWidth / ASPECT_RATIO;
+            }
+
+            canvasWidth = Math.round(newWidth);
+            canvasHeight = Math.round(newHeight);
+            scale = canvasWidth / 600;
+
+            canvas.width = canvasWidth;
+            canvas.height = canvasHeight;
+
+            updateBasketSize();
+        }
+
+        function updateBasketSize() {
+            basket.width = BASE_BASKET_WIDTH * scale;
+            basket.height = BASE_BASKET_HEIGHT * scale;
+            basket.x = (canvasWidth - basket.width) / 2;
+            basket.y = canvasHeight - basket.height - 20 * scale;
+        }
+
+        function drawBasket() {
+            ctx.fillStyle = '#8B4513';
+            ctx.fillRect(basket.x, basket.y, basket.width, basket.height);
+            
+            ctx.fillStyle = '#D2691E';
+            ctx.fillRect(basket.x + 5 * scale, basket.y + 5 * scale, basket.width - 10 * scale, basket.height - 10 * scale);
+            
+            ctx.fillStyle = '#CD853F';
+            ctx.beginPath();
+            ctx.moveTo(basket.x - 5 * scale, basket.y + basket.height);
+            ctx.lineTo(basket.x, basket.y + basket.height - 10 * scale);
+            ctx.lineTo(basket.x + basket.width, basket.y + basket.height - 10 * scale);
+            ctx.lineTo(basket.x + basket.width + 5 * scale, basket.y + basket.height);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        function drawCoin(x, y) {
+            const coinSize = BASE_COIN_SIZE * scale;
+            const gradient = ctx.createRadialGradient(x, y, 0, x, y, coinSize / 2);
+            gradient.addColorStop(0, '#FFD700');
+            gradient.addColorStop(0.5, '#FFA500');
+            gradient.addColorStop(1, '#CD853F');
+            
+            ctx.beginPath();
+            ctx.arc(x, y, coinSize / 2, 0, Math.PI * 2);
+            ctx.fillStyle = gradient;
+            ctx.fill();
+            
+            ctx.fillStyle = '#FFF';
+            ctx.font = `bold ${16 * scale}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('$', x, y);
+        }
+
+        function drawBomb(x, y) {
+            const bombSize = BASE_BOMB_SIZE * scale;
+            ctx.beginPath();
+            ctx.arc(x, y, bombSize / 2, 0, Math.PI * 2);
+            ctx.fillStyle = '#333';
+            ctx.fill();
+            ctx.strokeStyle = '#555';
+            ctx.lineWidth = 2 * scale;
+            ctx.stroke();
+            
+            ctx.fillStyle = '#444';
+            ctx.fillRect(x - 8 * scale, y - bombSize / 2 - 8 * scale, 16 * scale, 10 * scale);
+            
+            ctx.fillStyle = '#FFD700';
+            ctx.beginPath();
+            ctx.moveTo(x, y - bombSize / 2 - 18 * scale);
+            ctx.lineTo(x - 5 * scale, y - bombSize / 2 - 13 * scale);
+            ctx.lineTo(x + 5 * scale, y - bombSize / 2 - 13 * scale);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        function spawnObject() {
+            const coinSize = BASE_COIN_SIZE * scale;
+            const bombSize = BASE_BOMB_SIZE * scale;
+            
+            if (Math.random() < 0.7) {
+                coins.push({
+                    x: Math.random() * (canvasWidth - coinSize),
+                    y: -coinSize
+                });
+            } else {
+                bombs.push({
+                    x: Math.random() * (canvasWidth - bombSize),
+                    y: -bombSize
+                });
+            }
+        }
+
+        function updateObjects() {
+            const coinSize = BASE_COIN_SIZE * scale;
+            const bombSize = BASE_BOMB_SIZE * scale;
+            const objectSpeed = BASE_OBJECT_SPEED * scale;
+
+            coins = coins.filter(coin => {
+                coin.y += objectSpeed;
+                
+                if (coin.y > canvasHeight) {
+                    return false;
+                }
+                
+                if (
+                    coin.y + coinSize / 2 > basket.y &&
+                    coin.y - coinSize / 2 < basket.y + basket.height &&
+                    coin.x > basket.x - coinSize / 2 &&
+                    coin.x < basket.x + basket.width + coinSize / 2
+                ) {
+                    score += 10;
+                    scoreElement.textContent = score;
+                    return false;
+                }
+                
+                return true;
+            });
+
+            bombs = bombs.filter(bomb => {
+                bomb.y += objectSpeed;
+                
+                if (bomb.y > canvasHeight) {
+                    return false;
+                }
+                
+                if (
+                    bomb.y + bombSize / 2 > basket.y &&
+                    bomb.y - bombSize / 2 < basket.y + basket.height &&
+                    bomb.x > basket.x - bombSize / 2 &&
+                    bomb.x < basket.x + basket.width + bombSize / 2
+                ) {
+                    lives--;
+                    updateLives();
+                    
+                    if (lives <= 0) {
+                        gameOver();
+                    }
+                    return false;
+                }
+                
+                return true;
+            });
+        }
+
+        function updateLives() {
+            livesElement.innerHTML = '';
+            for (let i = 0; i < lives; i++) {
+                livesElement.innerHTML += '<span class="heart">❤️</span>';
+            }
+            for (let i = lives; i < 3; i++) {
+                livesElement.innerHTML += '<span class="heart" style="opacity: 0.3;">🖤</span>';
+            }
+        }
+
+        function updateBasket() {
+            const basketSpeed = BASE_BASKET_SPEED * scale;
+            if (keys['ArrowLeft'] || keys['KeyA']) {
+                basket.x = Math.max(0, basket.x - basketSpeed);
+            }
+            if (keys['ArrowRight'] || keys['KeyD']) {
+                basket.x = Math.min(canvasWidth - basket.width, basket.x + basketSpeed);
+            }
+        }
+
+        function drawBackground() {
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvasHeight);
+            gradient.addColorStop(0, '#87CEEB');
+            gradient.addColorStop(1, '#E0F7FA');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+            
+            ctx.fillStyle = '#90EE90';
+            ctx.fillRect(0, canvasHeight - 30 * scale, canvasWidth, 30 * scale);
+            
+            ctx.fillStyle = '#228B22';
+            ctx.fillRect(0, canvasHeight - 5 * scale, canvasWidth, 5 * scale);
+        }
+
+        function gameLoop(timestamp) {
+            if (!gameRunning) return;
+
+            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+            
+            drawBackground();
+            
+            updateBasket();
+            updateObjects();
+            
+            spawnTimer += timestamp - lastTime;
+            if (spawnTimer >= BASE_SPAWN_INTERVAL) {
+                spawnObject();
+                spawnTimer = 0;
+            }
+            
+            const coinSize = BASE_COIN_SIZE * scale;
+            const bombSize = BASE_BOMB_SIZE * scale;
+            coins.forEach(coin => drawCoin(coin.x + coinSize / 2, coin.y + coinSize / 2));
+            bombs.forEach(bomb => drawBomb(bomb.x + bombSize / 2, bomb.y + bombSize / 2));
+            
+            drawBasket();
+            
+            lastTime = timestamp;
+            animationId = requestAnimationFrame(gameLoop);
+        }
+
+        let lastTime = 0;
+
+        function startGame() {
+            resizeCanvas();
+            basket.x = (canvasWidth - basket.width) / 2;
+            basket.y = canvasHeight - basket.height - 20 * scale;
+            coins = [];
+            bombs = [];
+            score = 0;
+            lives = 3;
+            spawnTimer = 0;
+            
+            scoreElement.textContent = '0';
+            updateLives();
+            
+            startScreen.style.display = 'none';
+            gameOverOverlay.style.display = 'none';
+            gameRunning = true;
+            
+            lastTime = performance.now();
+            animationId = requestAnimationFrame(gameLoop);
+        }
+
+        function gameOver() {
+            gameRunning = false;
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+            finalScoreElement.textContent = score;
+            gameOverOverlay.style.display = 'flex';
+        }
+
+        function handleResize() {
+            resizeCanvas();
+            if (!gameRunning) {
+                ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+                drawBackground();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            keys[e.code] = true;
+            if (['ArrowLeft', 'ArrowRight', 'KeyA', 'KeyD'].includes(e.code)) {
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            keys[e.code] = false;
+        });
+
+        window.addEventListener('resize', handleResize);
+
+        startBtn.addEventListener('click', startGame);
+        restartBtn.addEventListener('click', startGame);
+
+        resizeCanvas();
+        updateLives();
+        drawBackground();
+    </script>
+</body>
+</html>
